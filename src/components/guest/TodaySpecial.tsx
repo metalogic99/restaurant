@@ -15,6 +15,8 @@ const TodaySpecial = () => {
     return data && data.specials ? data.specials : [];
   }, [data]);
 
+  const onlyOne = todaysSpecials.length === 1;
+
   // Custom arrow components
   const NextArrow = (props: any) => {
     const { className, style, onClick } = props;
@@ -43,16 +45,33 @@ const TodaySpecial = () => {
   };
 
   // Slider configuration
+  // const settings = {
+  //   dots: true,
+  //   infinite: true,
+  //   speed: 500,
+  //   slidesToShow: 1,
+  //   slidesToScroll: 1,
+  //   autoplay: true,
+  //   autoplaySpeed: 1200,
+  //   nextArrow: <NextArrow />,
+  //   prevArrow: <PrevArrow />,
+  //   appendDots: (dots: any) => (
+  //     <div className="custom-dots-container">
+  //       <ul className="custom-dots">{dots}</ul>
+  //     </div>
+  //   ),
+  //   customPaging: () => <div className="custom-dot"></div>,
+  // };
   const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
+    dots: !onlyOne,
+    infinite: !onlyOne,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: !onlyOne,
     autoplaySpeed: 1200,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    speed: 500,
+    nextArrow: !onlyOne ? <NextArrow /> : <></>,
+    prevArrow: !onlyOne ? <PrevArrow /> : <></>,
     appendDots: (dots: any) => (
       <div className="custom-dots-container">
         <ul className="custom-dots">{dots}</ul>
