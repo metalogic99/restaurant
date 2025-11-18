@@ -8,15 +8,12 @@ const GuestMenu = () => {
   const menuData = useMemo(() => {
     return data ? data : [];
   }, [data]);
-  console.log("menu data obtained is", menuData);
   const [selectedCategory, setSelectedCategory] = useState<string>();
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>("");
 
   useEffect(() => {
     setSelectedCategory(menuData.length > 0 ? menuData[0].name : "");
   }, [menuData]);
-
-  console.log(selectedCategory);
 
   const subCategories = useMemo(() => {
     if (menuData.length === 0) {
