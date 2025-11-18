@@ -23,9 +23,9 @@ export async function middleware(request: NextRequest) {
     return;
   }
   if (!token) {
-    const loginUrl = new URL(`/login`, request.url);
-    // const guestURL = new URL(`/guest`, request.url);
-    return NextResponse.redirect(loginUrl);
+    // const loginUrl = new URL(`/login`, request.url);
+    const guestURL = new URL(`/guest`, request.url);
+    return NextResponse.redirect(guestURL);
   }
 
   try {
@@ -34,8 +34,8 @@ export async function middleware(request: NextRequest) {
       new TextEncoder().encode(JWT_SECRET)
     );
     if (!payload) {
-      const loginUrl = new URL(`/login`, request.url);
-      return NextResponse.redirect(loginUrl);
+      const guestUrl = new URL(`/guest`, request.url);
+      return NextResponse.redirect(guestUrl);
     }
     if (pathname.startsWith("/admin")) {
       if (payload.role === "admin") {
