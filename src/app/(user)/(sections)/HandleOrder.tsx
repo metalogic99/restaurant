@@ -46,10 +46,6 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
     data && data.data && data?.data?.discount ? data.data.isPercentage : true
   );
 
-  useEffect(() => {
-    console.log("discount and type is", discount, isPercentage, data);
-  }, [data]);
-
   const [showProductModifyModal, setShowModifyOrderModal] = useState<{
     product: {
       product: Product;
