@@ -17,6 +17,7 @@ export interface IOrder extends mongoose.Document {
   grossTotal: number;
   total: number;
   discount: number;
+  isPercentage: boolean;
   name?: string;
 }
 
@@ -68,6 +69,7 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    isPercentage: { type: Boolean, default: true },
     discount: {
       type: Number,
       default: 0,

@@ -5,7 +5,7 @@ import AdminError from "@/components/admin/AdminError";
 import Loading from "@/components/shared/Loading";
 import { useRouter } from "next/navigation";
 import ButtonActions from "@/components/user/tableSection/ButtonActions";
-import { CheckCheck, PencilIcon } from "lucide-react";
+import { CheckCheck } from "lucide-react";
 import { toast } from "sonner";
 import ClearOrders from "@/components/user/tableSection/ClearOrders";
 import {
@@ -18,7 +18,7 @@ import { useSocket } from "@/components/providers/SocketProvider";
 import useSocketEvents from "@/utils/socketHandler";
 import BillModal from "@/components/order/BillModal";
 import { useUser } from "@/components/providers/RoleProvider";
-import SaveDiscount from "@/components/order/SaveDiscount";
+import Discount from "@/components/order/Discount";
 
 interface HandleOrderProps {
   tableId: string;
@@ -42,6 +42,14 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
 
   const [localDataResult, setLocalData] = useState([]);
   const [editingDiscount, setEditDiscount] = useState(false);
+  const [isPercentage, setIsPercentage] = useState<boolean>(
+    data && data.data && data?.data?.discount ? data.data.isPercentage : true
+  );
+
+  useEffect(() => {
+    console.log("discount and type is", discount, isPercentage, data);
+  }, [data]);
+
   const [showProductModifyModal, setShowModifyOrderModal] = useState<{
     product: {
       product: Product;
@@ -59,6 +67,9 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
   useEffect(() => {
     setDiscount(
       data && data.data && data?.data?.discount ? data.data.discount : 0
+    );
+    setIsPercentage(
+      data && data.data && data?.data?.discount ? data.data.isPercentage : true
     );
   }, [data?.data, data]);
 
@@ -95,7 +106,12 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
       );
     }
 
-    total = grossTotal - discount;
+    if (isPercentage) {
+      total = grossTotal - (discount / 100) * grossTotal;
+      total = parseInt(total.toFixed(1));
+    } else {
+      total = grossTotal - discount;
+    }
     return { grossTotal, total };
   }, [
     discount,
@@ -103,6 +119,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
     data?.data?.total,
     data?.data?.orderedProducts,
     localDataResult,
+    isPercentage,
   ]);
 
   if (error) {
@@ -151,6 +168,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
           orderId: data.data._id,
           updateData: updateOrderData,
           discount: discount,
+          isPercentage: isPercentage,
         },
         {
           onSuccess: (data) => {
@@ -372,38 +390,16 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
                     >
                       Discount
                     </td>
-                    <td className="p-2 sm:p-3 text-xs flex gap-3 items-center text-forestGreen sm:text-sm font-bold">
-                      Rs. {!editingDiscount && <span>{discount}</span>}
-                      {editingDiscount && (
-                        <input
-                          value={discount}
-                          className="w-10"
-                          onChange={(e) => {
-                            const value = parseFloat(e.target.value);
-                            setDiscount(
-                              isNaN(value) ? 0 : value < 0 ? 0 : value
-                            );
-                          }}
-                          type="number"
-                          step="any"
-                        />
-                      )}
-                      {!editingDiscount && (
-                        <PencilIcon
-                          className="cursor-pointer"
-                          onClick={() => setEditDiscount(true)}
-                          size={16}
-                        />
-                      )}
-                      {editingDiscount && (
-                        <SaveDiscount
-                          closeEdit={() => setEditDiscount(false)}
-                          data={data.data}
-                          tableId={tableId}
-                          discount={discount}
-                        />
-                      )}
-                    </td>
+                    <Discount
+                      tableId={tableId}
+                      setDiscount={setDiscount}
+                      setEditDiscount={setEditDiscount}
+                      data={data}
+                      discount={discount}
+                      editingDiscount={editingDiscount}
+                      isPercentage={isPercentage}
+                      setIsPercentage={setIsPercentage}
+                    />
                   </tr>
                 )}
                 {(role === "admin" || role === "receptionist") && (

@@ -6,7 +6,11 @@ import connectDB from "@/utils/connectDB";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
-async function calculateTotals(orderedProducts: any, overallDiscount = 0) {
+async function calculateTotals(
+  orderedProducts: any,
+  overallDiscount = 0,
+  isPercentage: boolean
+) {
   let grossTotal = 0;
   let total = 0;
   for (const orderedProduct of orderedProducts) {
@@ -17,13 +21,17 @@ async function calculateTotals(orderedProducts: any, overallDiscount = 0) {
   }
 
   total = grossTotal - overallDiscount;
-
+  if (isPercentage) {
+    total = grossTotal - (overallDiscount / 100) * grossTotal;
+    total = parseInt(total.toFixed(1));
+  } else {
+    total = grossTotal - overallDiscount;
+  }
   return {
     grossTotal,
     total: total < 0 ? 0 : total,
   };
 }
-
 
 export const PATCH = async (
   req: NextRequest,
@@ -40,7 +48,9 @@ export const PATCH = async (
       return NextResponse.json(authentication, { status: 401 });
     }
     const { id: orderId } = params;
-    const { data, status, discount, completeProduct } = await req.json();
+    const { data, status, discount, isPercentage, completeProduct } =
+      await req.json();
+
     const isValidOrderId = mongoose.isValidObjectId(orderId);
     let invalidUpdate;
     if (!isValidOrderId) {
@@ -52,7 +62,7 @@ export const PATCH = async (
         { status: 400 }
       );
     }
-    if (!data && !status && !discount && !completeProduct) {
+    if (!data && !status && !discount && !completeProduct && !isPercentage) {
       return NextResponse.json(
         {
           success: false,
@@ -156,9 +166,12 @@ export const PATCH = async (
         message: "Completed Product Quantity cannot be modified",
       });
     }
+
+    order.isPercentage = isPercentage;
     const { grossTotal, total } = await calculateTotals(
       order.orderedProducts,
-      discount
+      discount,
+      isPercentage ? isPercentage : order.isPercentage
     );
     order.grossTotal = grossTotal;
     order.total = total;
@@ -262,7 +275,8 @@ export const POST = async (
     });
     const { grossTotal, total } = await calculateTotals(
       orderedProducts,
-      discount
+      discount,
+      true
     );
     const order = await Order.create({
       orderType: orderType,

@@ -7,18 +7,20 @@ const SaveDiscount = ({
   data,
   closeEdit,
   discount,
+  isPercentage,
 }: {
   tableId: string;
   data: any;
   closeEdit: any;
   discount: number;
+  isPercentage: boolean;
 }) => {
   const { mutate: updateDiscount } = useUpdateOrder(tableId);
   const changeDiscount = () => {
     closeEdit();
     if (data) {
       updateDiscount(
-        { orderId: data._id, discount: discount },
+        { orderId: data._id, discount: discount, isPercentage },
         {
           onSuccess: () => {
             toast.success("Discount updated");

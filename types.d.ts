@@ -66,6 +66,7 @@ interface Order {
   tableId: string;
   grossTotal: number;
   total: number;
+  isPercentage: boolean;
   discount: number;
   orderedProducts: {
     product: Product;

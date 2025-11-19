@@ -51,6 +51,7 @@ export const updateOrder = async (
   updateData?: UpdateOrder[],
   status?: string,
   discount?: number,
+  isPercentage?: boolean,
   productCompleted?: string
 ): Promise<{ success: boolean; message: string }> => {
   try {
@@ -58,6 +59,7 @@ export const updateOrder = async (
       data: updateData,
       status,
       discount: discount,
+      isPercentage,
       completeProduct: productCompleted,
     });
     return response.data;

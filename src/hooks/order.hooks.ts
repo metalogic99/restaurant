@@ -45,14 +45,24 @@ export const useUpdateOrder = (tableId: string) => {
       updateData,
       status,
       discount,
+      isPercentage,
       productCompleted,
     }: {
       orderId: string;
       updateData?: UpdateOrder[];
       status?: string;
       discount?: number;
+      isPercentage?: boolean;
       productCompleted?: string;
-    }) => updateOrder(orderId, updateData, status, discount, productCompleted),
+    }) =>
+      updateOrder(
+        orderId,
+        updateData,
+        status,
+        discount,
+        isPercentage,
+        productCompleted
+      ),
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.ORDER, tableId],
