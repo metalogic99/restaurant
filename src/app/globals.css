@@ -45,6 +45,7 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    font-family: var(--font-poppins), sans-serif;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -83,14 +84,13 @@ body {
   }
 }
 
-
 .special-slider .slick-dots li.slick-active div {
-  background-color: #16a34a; 
+  background-color: #16a34a;
   transform: scale(1.2);
 }
 
 .special-slider .slick-dots li div:hover {
-  background-color: #86efac; 
+  background-color: #86efac;
 }
 
 .special-slider .slick-dots li {
@@ -98,12 +98,5 @@ body {
 }
 
 .special-slider .slick-slide > div {
-  padding-bottom: 2px; 
+  padding-bottom: 2px;
 }
-
-
-
-
-
-
-

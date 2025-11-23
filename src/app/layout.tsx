@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
 // import Providers from "@/components/shared/Providers";
@@ -20,6 +21,12 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // choose what you need
+  variable: "--font-poppins",
+});
+
 export const metadata: Metadata = {
   title: "Mint Restro",
   description: "Mintro Restaurant Pos",
@@ -34,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
       >
         <UserProvider user={user}>
           <MainLayout>{children}</MainLayout>
