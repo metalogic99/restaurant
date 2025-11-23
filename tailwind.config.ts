@@ -52,6 +52,7 @@ const config: Config = {
         },
         mintGreen: "#A8E6A1",
         forestGreen: "#3C7A3E",
+        forestGreenLight: "#389F40",
         softPeach: "#F4C7B3",
         buttonColor: "#5CA660",
         hover: "#F4C7B3",
