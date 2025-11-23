@@ -91,7 +91,7 @@ const LiItem = ({
       <Link
         href={to}
         className="relative cursor-pointer hover:text-forestGreenLight 
-          after:content-[''] after:absolute after:left-1/2 after:bottom-0
+          after:content-[''] after:absolute after:left-1/2 after:-bottom-1
           after:h-[2px] after:bg-forestGreenLight after:w-0
           after:transition-all after:duration-300 after:-translate-x-1/2
           hover:after:w-full"
