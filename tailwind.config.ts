@@ -12,6 +12,7 @@ const config: Config = {
       fontFamily: {
         poppins: ["var(--font-poppins)", "sans-serif"],
         prociono: ["var(--font-prociono)", "sans-serif"],
+        rockNRoll: ["var(--font-rocknrollOne)", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",

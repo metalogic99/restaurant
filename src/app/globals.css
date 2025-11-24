@@ -116,12 +116,12 @@ body {
 
 /* Left arrow */
 .special-slider .slick-prev {
-  left: -50px !important; /* adjust to fit your layout */
+  left: -60px !important; /* adjust to fit your layout */
 }
 
 /* Right arrow */
 .special-slider .slick-next {
-  right: -30px !important; /* adjust to fit your layout */
+  right: -40px !important; /* adjust to fit your layout */
 }
 
 /* Remove default arrow characters */

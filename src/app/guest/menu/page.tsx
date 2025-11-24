@@ -1,45 +1,8 @@
-// app/menu/page.tsx
+import CategoriesSection from "@/components/guest/CategoriesSection";
 import CommonSectionGuest from "@/components/guest/CommonSectionGuest";
 import TodaySpecial from "@/components/guest/TodaySpecial";
-import Image from "next/image";
 import React from "react";
-
 export default function page() {
-  const heroImage = "/mnt/data/6977374a-1c1e-4f66-bc54-e14512244fde.png";
-
-  const categories = [
-    {
-      title: "Appetizers and Snacks",
-      subtitle: "",
-      placeholder: "/mnt/data/6977374a-1c1e-4f66-bc54-e14512244fde.png",
-    },
-    {
-      title: "Main Course",
-      subtitle: "",
-      placeholder: "/mnt/data/6977374a-1c1e-4f66-bc54-e14512244fde.png",
-    },
-    {
-      title: "Breakfast",
-      subtitle: "",
-      placeholder: "/mnt/data/6977374a-1c1e-4f66-bc54-e14512244fde.png",
-    },
-    {
-      title: "Salad",
-      subtitle: "",
-      placeholder: "/mnt/data/6977374a-1c1e-4f66-bc54-e14512244fde.png",
-    },
-    {
-      title: "Deserts",
-      subtitle: "",
-      placeholder: "/mnt/data/6977374a-1c1e-4f66-bc54-e14512244fde.png",
-    },
-    {
-      title: "Pizza",
-      subtitle: "",
-      placeholder: "/mnt/data/6977374a-1c1e-4f66-bc54-e14512244fde.png",
-    },
-  ];
-
   return (
     <main className="w-full">
       <CommonSectionGuest>
@@ -85,34 +48,7 @@ export default function page() {
             </div>
           </div> */}
           <TodaySpecial />
-          <h3 className="mt-6 text-[#f1771a] font-semibold text-sm">
-            Our Categories
-          </h3>
-          <div className="mt-3 grid grid-cols-2 gap-y-6 gap-x-6">
-            {categories.map((c, i) => (
-              <div key={i} className="flex flex-col items-center">
-                <div className="w-[88px] h-[88px] rounded-full bg-white shadow-md overflow-hidden relative flex items-center justify-center">
-                  <Image
-                    src={c.placeholder}
-                    alt={c.title}
-                    fill
-                    style={{ objectFit: "cover" }}
-                    sizes="88px"
-                    unoptimized
-                  />
-                </div>
-
-                <div className="mt-3 w-[100px] text-center">
-                  <div className="relative">
-                    <div className="absolute inset-0 -skew-x-6 bg-[#f1771a] h-7 rounded-md transform -z-10" />
-                    <p className="text-[12px] text-white font-semibold relative z-10 px-2">
-                      {c.title}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <CategoriesSection />
           {/* bottom spacing */}
           <div className="h-8" />
         </div>

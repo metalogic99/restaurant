@@ -102,10 +102,10 @@ const TodaySpecial = () => {
         Today&apos;s Special
       </div> */}
 
-      <div className="relative max-w-2xl mx-auto rounded-lg shadow-[0_4px_14.4px_rgba(0,0,0,0.25)]">
+      <div className="bg-white relative max-w-3xl mx-auto rounded-lg shadow-[0_4px_14.4px_rgba(0,0,0,0.25)]">
         <Slider {...settings} className="special-slider">
           {todaysSpecials.map((special, index) => (
-            <div key={index} className="p-5 bg-white rounded-lg">
+            <div key={index} className="px-10 pt-8 bg-white rounded-lg">
               <SpecialCard special={special} />
             </div>
           ))}

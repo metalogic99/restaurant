@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Poppins, Prociono } from "next/font/google";
+import { Poppins, Prociono, RocknRoll_One } from "next/font/google";
 import "./globals.css";
 
 // import Providers from "@/components/shared/Providers";
@@ -26,6 +26,11 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700"], // choose what you need
   variable: "--font-poppins",
 });
+const rocknRoll = RocknRoll_One({
+  subsets: ["latin"],
+  weight: ["400"], // choose what you need
+  variable: "--font-rocknrollOne",
+});
 
 const prociono = Prociono({
   subsets: ["latin"],
@@ -47,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${prociono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${prociono.variable} ${rocknRoll.variable} antialiased`}
       >
         <UserProvider user={user}>
           <MainLayout>{children}</MainLayout>
