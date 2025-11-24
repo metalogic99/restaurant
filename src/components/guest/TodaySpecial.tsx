@@ -17,16 +17,17 @@ const TodaySpecial = () => {
 
   const onlyOne = todaysSpecials.length === 1;
 
-  // Custom arrow components
   const NextArrow = (props: any) => {
     const { className, style, onClick } = props;
     return (
       <div
-        className={`${className} custom-arrow next-arrow`}
+        className={`${className} arrow-right`}
         style={{ ...style }}
         onClick={onClick}
       >
-        <ChevronRight className="text-forestGreen text-xl" />
+        <div className="h-10 w-10 bg-orange rounded-full flex items-center justify-center">
+          <ChevronRight className="text-white text-xl" />
+        </div>
       </div>
     );
   };
@@ -35,11 +36,13 @@ const TodaySpecial = () => {
     const { className, style, onClick } = props;
     return (
       <div
-        className={`${className} custom-arrow prev-arrow`}
+        className={`${className} z-20 translate-x-6 arrow-left`}
         style={{ ...style }}
         onClick={onClick}
       >
-        <ChevronLeft className="text-forestGreen text-xl" />
+        <div className="h-10 w-10 bg-orange rounded-full flex items-center justify-center">
+          <ChevronLeft className="text-white text-xl" />
+        </div>
       </div>
     );
   };
@@ -68,8 +71,8 @@ const TodaySpecial = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: !onlyOne,
-    autoplaySpeed: 1200,
-    speed: 500,
+    autoplaySpeed: 3000,
+    speed: 2000,
     nextArrow: !onlyOne ? <NextArrow /> : <></>,
     prevArrow: !onlyOne ? <PrevArrow /> : <></>,
     appendDots: (dots: any) => (
@@ -94,15 +97,15 @@ const TodaySpecial = () => {
   if (!todaysSpecials || todaysSpecials.length === 0) return <></>;
 
   return (
-    <div className="mb-12 px-4">
-      <div className="text-3xl md:text-4xl font-bold text-forestGreen mb-6 text-center">
+    <div className="my-12 px-4">
+      {/* <div className="text-3xl md:text-4xl font-bold text-forestGreen mb-6 text-center">
         Today&apos;s Special
-      </div>
+      </div> */}
 
-      <div className="relative max-w-4xl mx-auto">
+      <div className="relative max-w-2xl mx-auto rounded-lg shadow-[0_4px_14.4px_rgba(0,0,0,0.25)]">
         <Slider {...settings} className="special-slider">
           {todaysSpecials.map((special, index) => (
-            <div key={index} className="px-2 pb-4">
+            <div key={index} className="p-5 bg-white rounded-lg">
               <SpecialCard special={special} />
             </div>
           ))}

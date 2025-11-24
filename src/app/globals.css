@@ -84,7 +84,7 @@ body {
   }
 }
 
-.special-slider .slick-dots li.slick-active div {
+/* .special-slider .slick-dots li.slick-active div {
   background-color: #16a34a;
   transform: scale(1.2);
 }
@@ -99,4 +99,33 @@ body {
 
 .special-slider .slick-slide > div {
   padding-bottom: 2px;
+} */
+
+/* Ensure slider wrapper is position:relative */
+.special-slider {
+  position: relative;
+}
+
+/* Fix arrow positioning */
+.special-slider .slick-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+}
+
+/* Left arrow */
+.special-slider .slick-prev {
+  left: -50px !important; /* adjust to fit your layout */
+}
+
+/* Right arrow */
+.special-slider .slick-next {
+  right: -30px !important; /* adjust to fit your layout */
+}
+
+/* Remove default arrow characters */
+.slick-prev:before,
+.slick-next:before {
+  display: none;
 }

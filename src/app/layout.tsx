@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Poppins } from "next/font/google";
+import { Poppins, Prociono } from "next/font/google";
 import "./globals.css";
 
 // import Providers from "@/components/shared/Providers";
@@ -27,6 +27,12 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+const prociono = Prociono({
+  subsets: ["latin"],
+  weight: ["400"], // choose what you need
+  variable: "--font-prociono",
+});
+
 export const metadata: Metadata = {
   title: "Mint Restro",
   description: "Mintro Restaurant Pos",
@@ -41,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${prociono.variable} antialiased`}
       >
         <UserProvider user={user}>
           <MainLayout>{children}</MainLayout>

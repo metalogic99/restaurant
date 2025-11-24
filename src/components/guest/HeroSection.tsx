@@ -1,11 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
     <section className="max-w-7xl mx-auto">
-      <div className="flex flex-col-reverse md:flex-row items-center justify-around w-full py-7 bg-[#F9FBF0] xl:px-10">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-around w-full py-7 bg-heroBackground xl:px-10">
         <div className="font-poppins">
           <h1 className="text-4xl font-semibold mb-4">Delicious Food at</h1>
           <h1 className="text-4xl font-semibold text-forestGreenLight">
@@ -14,9 +15,11 @@ const HeroSection = () => {
           <p className="mt-4 text-2xl ">Pure, Fresh and Green</p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <button className="bg-[#EF7901] text-white px-5 py-2 rounded flex items-center justify-center gap-2">
-              View Menu <ArrowRight size={18} />
-            </button>
+            <Link href="/guest/menu">
+              <button className="bg-[#EF7901] text-white px-5 py-2 rounded flex items-center justify-center gap-2">
+                View Menu <ArrowRight size={18} />
+              </button>
+            </Link>
             <button className="bg-forestGreenLight text-white px-5 py-2 rounded flex items-center justify-center gap-2">
               Reserve Table <ArrowRight size={18} />
             </button>

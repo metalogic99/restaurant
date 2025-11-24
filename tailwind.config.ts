@@ -11,6 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         poppins: ["var(--font-poppins)", "sans-serif"],
+        prociono: ["var(--font-prociono)", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
@@ -60,6 +61,8 @@ const config: Config = {
         buttonColor: "#5CA660",
         hover: "#F4C7B3",
         brown: "#f9eedc",
+        heroBackground: "#F9FBF0",
+        orange: "#F77800",
       },
       borderRadius: {
         lg: "var(--radius)",

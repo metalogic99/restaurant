@@ -630,7 +630,7 @@ export default function Testimonials() {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="py-16 px-4 bg-green-50">
+    <section className="py-16 px-4 bg-heroBackground">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">

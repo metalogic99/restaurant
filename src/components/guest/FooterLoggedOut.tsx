@@ -4,7 +4,7 @@ import CommonSectionGuest from "./CommonSectionGuest";
 export default function FooterLoggedOut() {
   return (
     <CommonSectionGuest>
-      <footer>
+      <footer className="max-w-5xl mx-auto">
         <div className="w-full h-1 bg-mintGreen mt-12"></div>
         <div className="w-full p-10 flex items-center justify-between">
           <div className="flex items-center gap-2">
