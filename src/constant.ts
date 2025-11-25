@@ -23,3 +23,8 @@ export const QUERY_KEYS = {
   EXPENSE: "expense",
   EXPENSES: "expenses",
 };
+
+export const companyInfo = {
+  number: "9851353599",
+  address: "Babarmal, Kathmandu",
+};

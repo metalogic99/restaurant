@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function TableCard() {
   return (
@@ -28,16 +29,18 @@ export default function TableCard() {
         </button>
       </div> */}
       <div className="w-full flex justify-center">
-        <button
-          className="group w-fit px-7 py-4 mx-auto bg-orange hover:bg-orange/90 
+        <Link href={"reservation/1"}>
+          <button
+            className="group w-fit px-7 py-4 mx-auto bg-orange hover:bg-orange/90 
                      flex items-center gap-1 text-white rounded-lg"
-        >
-          <span className="font-inter font-semibold text-lg">
-            Reserve Table
-          </span>
+          >
+            <span className="font-inter font-semibold text-lg">
+              Reserve Table
+            </span>
 
-          <ArrowRight className="transition-transform duration-300 group-hover:translate-x-3" />
-        </button>
+            <ArrowRight className="transition-transform duration-300 group-hover:translate-x-3" />
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -7,8 +7,8 @@ export default function ReservationSearch() {
   return (
     <Card className="w-full h-full  border-2 border-orange bg-white pt-4 px-5 md:pt-6 md:px-10 rounded-xl shadow-sm relative z-20">
       <CardContent className="flex flex-col items-center gap-8 w-full">
-        <div className="flex gap-4 items-end justify-center font-roboto w-full">
-          <div className="border rounded-md border-[#787878] text-[#787878] px-3 py-2 flex flex-col flex-1">
+        <div className="flex md:flex-row flex-col gap-4 items-end justify-center font-roboto w-full">
+          <div className="border rounded-md border-[#787878] text-[#787878] px-3 py-2 flex flex-col w-full flex-1">
             <Label className="text-orange text-sm -mt-4 bg-white px-1 w-fit">
               Date
             </Label>
@@ -18,7 +18,7 @@ export default function ReservationSearch() {
             </div>
           </div>
 
-          <div className="border rounded-md border-[#787878] text-[#787878] px-3 py-2 flex flex-col flex-1">
+          <div className="border rounded-md border-[#787878] text-[#787878] px-3 py-2 flex flex-col flex-1 w-full">
             <Label className="text-orange text-sm -mt-4 bg-white px-1 w-fit">
               People
             </Label>
@@ -39,7 +39,7 @@ export default function ReservationSearch() {
             </div>
           </div>
 
-          <div className="border rounded-md border-[#787878] text-[#787878] px-3 py-2 flex flex-col flex-1">
+          <div className="border rounded-md border-[#787878] text-[#787878] px-3 py-2 flex flex-col w-full flex-1">
             <Label className="text-orange text-sm -mt-4 bg-white px-1 w-fit">
               Time
             </Label>
