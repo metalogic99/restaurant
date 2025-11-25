@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Poppins, Prociono, RocknRoll_One } from "next/font/google";
+import {
+  Poppins,
+  Prociono,
+  RocknRoll_One,
+  Roboto,
+  Inter,
+  Lora,
+} from "next/font/google";
 import "./globals.css";
 
 // import Providers from "@/components/shared/Providers";
@@ -37,6 +44,22 @@ const prociono = Prociono({
   weight: ["400"], // choose what you need
   variable: "--font-prociono",
 });
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"], // choose what you need
+  variable: "--font-roboto",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"], // choose what you need
+  variable: "--font-inter",
+});
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"], // choose what you need
+  variable: "--font-lora",
+});
 
 export const metadata: Metadata = {
   title: "Mint Restro",
@@ -52,7 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${prociono.variable} ${rocknRoll.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${prociono.variable} ${rocknRoll.variable} ${roboto.variable} ${inter.variable} ${lora.variable} antialiased`}
       >
         <UserProvider user={user}>
           <MainLayout>{children}</MainLayout>

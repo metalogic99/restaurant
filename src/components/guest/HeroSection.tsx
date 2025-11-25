@@ -20,9 +20,11 @@ const HeroSection = () => {
                 View Menu <ArrowRight size={18} />
               </button>
             </Link>
-            <button className="bg-forestGreenLight text-white px-5 py-2 rounded flex items-center justify-center gap-2">
-              Reserve Table <ArrowRight size={18} />
-            </button>
+            <Link href="/guest/reservation">
+              <button className="bg-forestGreenLight text-white px-5 py-2 rounded flex items-center justify-center gap-2">
+                Reserve Table <ArrowRight size={18} />
+              </button>
+            </Link>
           </div>
 
           <div className="flex justify-center md:justify-start items-center mt-4 text-yellow-500 text-4xl gap-1">

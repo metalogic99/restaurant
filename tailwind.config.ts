@@ -13,6 +13,9 @@ const config: Config = {
         poppins: ["var(--font-poppins)", "sans-serif"],
         prociono: ["var(--font-prociono)", "sans-serif"],
         rockNRoll: ["var(--font-rocknrollOne)", "sans-serif"],
+        roboto: ["var(--font-roboto)", "sans-serif"],
+        inter: ["var(--font-inter)", "sans-serif"],
+        lora: ["var(--font-lora)", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",

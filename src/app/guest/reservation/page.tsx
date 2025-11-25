@@ -1,0 +1,97 @@
+// import React from "react";
+// import Image from "next/image";
+// import CommonSectionGuest from "@/components/guest/CommonSectionGuest";
+// import ReservationSearch from "@/components/guest/reservation/ReservationSearch";
+
+// export default function page() {
+//   return (
+//     <CommonSectionGuest>
+//       <div className="py-14 bg-heroBackground px-6 text-[#3A3A3A] font-prociono min-h-screen">
+//         <div className=" flex justify-between items-start">
+//           <div>
+//             <h1 className="text-5xl font-bold  text-orange tracking-wider mb-2">
+//               RESERVATION
+//             </h1>
+//             <p className="text-gray-600 leading-snug font-sans max-w-md text-lg">
+//               Reservations available: Sun–Thu after 5 PM,
+//               <br />
+//               Friday after 2 PM, and all day Saturday.
+//             </p>
+//           </div>
+//         </div>
+
+//         <div className=" relative mt-8">
+//           <Image
+//             src="/guest/reservation/mintGirl.png"
+//             alt="reservation-girl"
+//             width={140}
+//             height={140}
+//             className="absolute -top-2 -translate-y-3/4 right-0 z-0"
+//           />
+//           <ReservationSearch />
+//         </div>
+//       </div>
+//     </CommonSectionGuest>
+//   );
+// }
+
+"use client";
+import React from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import CommonSectionGuest from "@/components/guest/CommonSectionGuest";
+import ReservationSearch from "@/components/guest/reservation/ReservationSearch";
+import TableCard from "@/components/guest/reservation/TableCard";
+
+export default function page() {
+  return (
+    <CommonSectionGuest>
+      <div className="py-14 bg-heroBackground px-24 text-[#3A3A3A] font-prociono min-h-screen relative overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, x: -80 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex justify-between items-start"
+        >
+          <div>
+            <h1 className="text-5xl font-bold text-orange tracking-wider mb-2">
+              RESERVATION
+            </h1>
+            <p className="text-gray-600 leading-snug font-sans max-w-md text-lg">
+              Reservations available: Sun–Thu after 5 PM,
+              <br />
+              Friday after 2 PM, and all day Saturday.
+            </p>
+          </div>
+        </motion.div>
+
+        <div className="relative mt-8">
+          <motion.div
+            initial={{ opacity: 0, x: 80 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <Image
+              src="/guest/reservation/mintGirl.png"
+              alt="reservation-girl"
+              width={140}
+              height={140}
+              className="absolute -top-2 -translate-y-3/4 right-0 z-0"
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 1 }}
+          >
+            <ReservationSearch />
+          </motion.div>
+        </div>
+        <div className="mt-10 w-full bg-pink">
+          <TableCard />
+        </div>
+      </div>
+    </CommonSectionGuest>
+  );
+}
