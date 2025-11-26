@@ -106,11 +106,11 @@ const MenuComponent = ({
       {productGroups.map((group, index) => (
         <div
           key={index}
-          className={`flex flex-row items-center mb-16 gap-10 ${
+          className={`flex flex-row items-center mb-6 md:mb-16 gap-10 ${
             index % 2 === 0 ? "" : "flex-row-reverse"
           }`}
         >
-          <div className="w-1/2">
+          <div className="md:w-1/2 w-full">
             {group.map((product, i) => (
               <div key={i} className={i !== 0 ? "mt-6" : ""}>
                 <div className="flex justify-between items-start">
@@ -124,7 +124,7 @@ const MenuComponent = ({
             ))}
           </div>
 
-          <div className="flex justify-center items-center w-1/2">
+          <div className="hidden justify-center items-center md:flex md:w-1/2">
             <motion.div
               initial={{
                 opacity: 0,
