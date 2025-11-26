@@ -1,4 +1,5 @@
-import CategoriesSection from "@/components/guest/CategoriesSection";
+// import CategoriesSection from "@/components/guest/CategoriesSection";
+import CategoriesSectionDesktop from "@/components/guest/CategoriesSectionDesktop";
 import CommonSectionGuest from "@/components/guest/CommonSectionGuest";
 import TodaySpecial from "@/components/guest/TodaySpecial";
 import React from "react";
@@ -48,7 +49,8 @@ export default function page() {
             </div>
           </div> */}
           <TodaySpecial />
-          <CategoriesSection />
+          {/* <CategoriesSection /> */}
+          <CategoriesSectionDesktop/>
           {/* bottom spacing */}
           <div className="h-8" />
         </div>
