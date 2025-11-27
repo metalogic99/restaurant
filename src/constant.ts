@@ -22,6 +22,9 @@ export const QUERY_KEYS = {
   SPECIALS: "specials",
   EXPENSE: "expense",
   EXPENSES: "expenses",
+  RESERVATION: "reservation",
+  RESERVATIONS: "reservations",
+  RESERVATIONTABLES: "reservationTables",
 };
 
 export const companyInfo = {

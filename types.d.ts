@@ -136,3 +136,13 @@ interface Expense {
   date: Date;
   createdAt: Date;
 }
+
+interface ReservationRequest {
+  name: string;
+  peopleNos: number;
+  phone: string;
+  preOrder: boolean;
+  time: string;
+  date: Date;
+  tableId: string;
+}

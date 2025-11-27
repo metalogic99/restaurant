@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dispatch, SetStateAction } from "react";
 import { companyInfo } from "@/constant";
 import Link from "next/link";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 export default function PreOrderPopUp({
   open,
@@ -18,6 +19,7 @@ export default function PreOrderPopUp({
       </DialogTrigger> */}
 
       <DialogContent className="w-fit rounded-xl bg-heroBackground border-none shadow-lg py-10 px-8 font-inter">
+        <DialogTitle></DialogTitle>
         <div className="w-full text-center space-y-4 text-xl">
           <div className=" rounded-md p-4">
             <p className=" text-black">
