@@ -5,9 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { CalendarIcon, Users, Clock, Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useGetAvailableTables } from "@/hooks/reservation.hooks";
 
-export default function ReservationSearch() {
+export default function ReservationSearch({ refetch }: { refetch: any }) {
   const queryParams = useSearchParams();
   const qtime = queryParams.get("time");
   const qdate = queryParams.get("date");
@@ -23,18 +22,6 @@ export default function ReservationSearch() {
     if (!dateStr) return "";
     return new Date(dateStr).toLocaleString("en-US", { weekday: "long" });
   };
-
-  const {
-    data: availableTables,
-    error: fetchError,
-    refetch,
-  } = useGetAvailableTables({
-    time: time ? time : "",
-    date: new Date(date ? date : ""),
-  });
-  console.log("error received is", fetchError);
-
-  console.log("availabe tables are", availableTables);
 
   const validateTime = () => {
     const day = getDayName(date);

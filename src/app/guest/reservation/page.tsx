@@ -5,8 +5,24 @@ import { motion } from "framer-motion";
 import CommonSectionGuest from "@/components/guest/CommonSectionGuest";
 import ReservationSearch from "@/components/guest/reservation/ReservationSearch";
 import TableCard from "@/components/guest/reservation/TableCard";
+import { useGetAvailableTables } from "@/hooks/reservation.hooks";
+import { useSearchParams } from "next/navigation";
 
-export default function page() {
+export default function Reservation() {
+  const queryParams = useSearchParams();
+  const qtime = queryParams.get("time");
+  const qdate = queryParams.get("date");
+  const {
+    data: availableTables,
+    error: fetchError,
+    refetch,
+  } = useGetAvailableTables({
+    time: qtime ? qtime : "",
+    date: new Date(qdate ? qdate : ""),
+  });
+  console.log("error received is", fetchError);
+
+  console.log("availabe tables are", availableTables);
   return (
     <CommonSectionGuest>
       <div className="py-14 bg-heroBackground px-6 md:px-24 text-[#3A3A3A] font-prociono min-h-screen relative overflow-hidden">
@@ -48,11 +64,15 @@ export default function page() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 1 }}
           >
-            <ReservationSearch />
+            <ReservationSearch refetch={refetch} />
           </motion.div>
         </div>
-        <div className="mt-10 w-full bg-pink">
-          <TableCard />
+        <div className="mt-10 w-full bg-pink space-y-8">
+          {availableTables &&
+            availableTables.tables &&
+            availableTables.tables.map((table: any) => (
+              <TableCard key={table._id} table={table} />
+            ))}
         </div>
       </div>
     </CommonSectionGuest>

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const ReservationSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    time: { type: String, required: true },
+    time: { type: Date, required: true },
     date: { type: Date, required: true },
     peopleNos: { type: Number, required: true },
     phone: { type: String, required: true },

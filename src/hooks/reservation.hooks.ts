@@ -25,9 +25,10 @@ export const useGetAvailableTables = ({
 }) => {
   console.log("fetching tables");
   return useQuery({
-    queryKey: [QUERY_KEYS.RESERVATIONTABLES],
+    queryKey: [QUERY_KEYS.RESERVATIONTABLES, date, time],
     queryFn: () => getAvailableTables(time, date),
     retry: false,
+
     enabled: !!time && !!date, // only fetch if both exist
   });
 };

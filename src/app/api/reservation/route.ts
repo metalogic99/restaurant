@@ -1,21 +1,18 @@
-import { authenticate } from "@/middleware/authentication";
 import Reservation from "@/models/reservation.model";
 import Table from "@/models/tableModel";
 import connectDB from "@/utils/connectDB";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-
-function convertTo24Hour(time12h: string) {
+function convertTo24HourDate(dateString: string, time12h: string) {
   const [time, meridian] = time12h.split(" ");
-  let hour = Number(time.split(":")[0]);
-  const minute = Number(time.split(":").pop());
+  let [hours, minutes] = time.split(":").map(Number);
+  if (meridian === "PM" && hours !== 12) hours += 12;
+  if (meridian === "AM" && hours === 12) hours = 0;
+  minutes = minutes || 0;
 
-  if (meridian === "PM" && hour !== 12) hour += 1;
-  if (meridian === "AM" && hour === 12) hour = 0;
-
-  return `${hour.toString().padStart(2, "0")}:${minute
-    .toString()
-    .padStart(2, "0")}`;
+  const date = new Date(dateString);
+  date.setHours(hours, minutes, 0, 0);
+  return date;
 }
 
 export async function POST(req: NextRequest) {
@@ -31,9 +28,9 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    const twentyFourHourTime = convertTo24Hour(time);
+    const targetTime = convertTo24HourDate(date, time);
+
     await connectDB();
-    const targetTime = new Date(`${date}T${twentyFourHourTime}:00`);
     const fifteenMin = 15 * 60 * 1000;
 
     const startTime = new Date(targetTime.getTime() - fifteenMin);
@@ -71,7 +68,7 @@ export async function POST(req: NextRequest) {
 
     const reservationCreated = new Reservation({
       name,
-      time: targetTime.getTime(),
+      time: targetTime,
       date: new Date(date),
       peopleNos,
       phone,
@@ -94,11 +91,41 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    await authenticate(req, ["admin"]);
+    await connectDB();
+
+    const { date, tableId } = Object.fromEntries(
+      req.nextUrl.searchParams.entries()
+    );
+
+    const filter: any = {};
+
+    if (date) {
+      const startOfDay = new Date(date);
+      startOfDay.setHours(0, 0, 0, 0);
+
+      const endOfDay = new Date(date);
+      endOfDay.setHours(23, 59, 59, 999);
+
+      filter.time = { $gte: startOfDay, $lte: endOfDay };
+    }
+
+    if (tableId) {
+      filter.table = tableId;
+    }
+
+    const reservations = await Reservation.find(filter, {
+      duration: 0,
+      activeOrderId: 0,
+      status: 0,
+    })
+      .populate("table")
+      .sort({ time: 1 });
+
+    return NextResponse.json({ reservations });
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching reservations:", error);
     return NextResponse.json(
-      { error: "Failed to reservations" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
