@@ -22,3 +22,14 @@ export const getAvailableTables = async (time: string, date: Date) => {
   }
 };
 
+export const getReservations = async (date?: Date, tableId?: string) => {
+  try {
+    const response = await api.get(
+      `/reservation?tableId=${tableId}&date=${date}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw handleApiError(error as Error);
+  }
+};

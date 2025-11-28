@@ -1,3 +1,4 @@
+import { authenticate } from "@/middleware/authentication";
 import Reservation from "@/models/reservation.model";
 import Table from "@/models/tableModel";
 import connectDB from "@/utils/connectDB";
@@ -92,6 +93,13 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     await connectDB();
+    const authenticationResponse = await authenticate(req, [
+      "admin, receptionist, waiter",
+    ]);
+
+    if (!authenticationResponse.success) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const { date, tableId } = Object.fromEntries(
       req.nextUrl.searchParams.entries()
