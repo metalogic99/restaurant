@@ -20,7 +20,10 @@ export default function FooterLoggedOut() {
             />
           </div>
 
-          <div className="flex flex-col  gap-6 md:gap-3 text-sm text-gray-600">
+          <div
+            id="contact"
+            className="flex flex-col  gap-6 md:gap-3 text-sm text-gray-600"
+          >
             <div className="flex items-center gap-2">
               <LocationIcon />
               <p>Babarmal, Kathmandu</p>

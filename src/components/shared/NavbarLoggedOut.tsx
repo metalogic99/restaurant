@@ -9,7 +9,7 @@ const navbarItems = [
   { name: "Home", to: "/guest" },
   { name: "Reservation", to: "/guest/reservation" },
   { name: "About Us", to: "/guest/#about" },
-  { name: "Contact Us", to: "/guest/#footer" },
+  { name: "Contact Us", to: "/guest/#contact" },
 ];
 
 const NavbarLoggedOut = () => {
