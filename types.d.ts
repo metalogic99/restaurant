@@ -146,3 +146,16 @@ interface ReservationRequest {
   date: Date;
   tableId: string;
 }
+
+type Reservation = {
+  _id: string;
+  name: string;
+  time: string;
+  date: string;
+  peopleNos: number;
+  phone: string;
+  preOrdered: boolean;
+  table: string;
+  createdAt: string;
+  updatedAt: string;
+};

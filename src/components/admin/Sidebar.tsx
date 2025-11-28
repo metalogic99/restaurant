@@ -2,7 +2,7 @@
 
 import {
   LayoutDashboard,
-  Utensils, 
+  Utensils,
   ChevronDown,
   ChevronRight,
   FolderPlus,
@@ -16,6 +16,7 @@ import {
   Settings,
   Gem,
   BanknoteArrowDown,
+  CalendarCheck,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -30,6 +31,7 @@ const Sidebar = () => {
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin/dashboard" },
     { label: "Settings", icon: Settings, href: "/admin/settings" },
     { label: "Table Management", icon: Table, href: "/admin/tables" },
+    { label: "Reservations", icon: CalendarCheck, href: "/admin/reservation" },
     { label: "User Management", icon: Users, href: "/admin/user-management" },
     { label: "Sales Report", icon: Album, href: "/admin/sales" },
     { label: "Today's Special", icon: Gem, href: "/admin/special" },

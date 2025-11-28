@@ -17,12 +17,16 @@ interface AddProductFormProps {
   defaultSubcategory: string; // Made required since we always pass it
 }
 
-const AddProductForm = ({ onSuccessClose, defaultSubcategory }: AddProductFormProps) => {
+const AddProductForm = ({
+  onSuccessClose,
+  defaultSubcategory,
+}: AddProductFormProps) => {
   const {
     register,
     handleSubmit,
     reset,
     setValue,
+
     formState: { errors, isValid },
   } = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
@@ -46,9 +50,9 @@ const AddProductForm = ({ onSuccessClose, defaultSubcategory }: AddProductFormPr
     // Ensure subcategory is always set to the default
     const productData = {
       ...data,
-      subcategory: defaultSubcategory
+      subcategory: defaultSubcategory,
     };
-    
+
     createProduct(productData, {
       onSuccess: (res) => {
         toast.success(res?.success || "Product added successfully");

@@ -33,3 +33,25 @@ export const getReservations = async (date?: Date, tableId?: string) => {
     throw handleApiError(error as Error);
   }
 };
+
+export const getReservationsSearch = async (search?: string) => {
+  try {
+    const response = await api.get(
+      search ? `/reservation/search?search=${search}` : `/reservation/search`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw handleApiError(error as Error);
+  }
+};
+
+export const deleteReservation = async (id: string) => {
+  try {
+    const response = await api.delete(`/reservation/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw handleApiError(error as Error);
+  }
+};

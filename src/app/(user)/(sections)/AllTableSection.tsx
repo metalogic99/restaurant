@@ -6,10 +6,13 @@ import AdminError from "@/components/admin/AdminError";
 import Loading from "@/components/shared/Loading";
 import { useRouter } from "next/navigation";
 import useSocketEvents from "@/utils/socketHandler";
+import { ReservationPop } from "@/components/user/tableSection/ReservationPop";
+import { useUser } from "@/components/providers/RoleProvider";
 
 const AllTableSection = () => {
-
   useSocketEvents();
+  const user = useUser();
+  const role = JSON.parse(user.user.value).role;
   const [currentFilter, setCurrentFilter] = useState<string>("all");
   const { data, isLoading, error } = useGetAllTables();
   const router = useRouter();
@@ -66,7 +69,9 @@ const AllTableSection = () => {
             <div
               key={idx}
               onClick={() => setCurrentFilter(item.value)}
-              className={`flex items-center justify-center h-24  shadow-xl rounded-xl cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out hover:border-2 hover:border-black `}
+              className={`flex items-center justify-center ${
+                currentFilter === item.value ? "border-orange border-2" : ""
+              } h-24  shadow-xl rounded-xl cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out hover:border-2 hover:border-black `}
             >
               <span className="text-lg font-semibold text-gray-800">
                 {item.label}
@@ -80,10 +85,11 @@ const AllTableSection = () => {
             <span className="text-lg font-semibold text-white">Take away</span>
           </button>
         </div>
+        {(role === "admin" || role === "receptionist") && <ReservationPop />}
         {!filteredTable ? (
           <div>Cant filter tables</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 ">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
             {filteredTable.map((table, index) => (
               <TableCard key={index} table={table} />
             ))}

@@ -94,9 +94,10 @@ export async function GET(req: NextRequest) {
   try {
     await connectDB();
     const authenticationResponse = await authenticate(req, [
-      "admin, receptionist, waiter",
+      "admin",
+      "receptionist",
+      "waiter",
     ]);
-
     if (!authenticationResponse.success) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -107,7 +108,11 @@ export async function GET(req: NextRequest) {
 
     const filter: any = {};
 
-    if (date) {
+    if (tableId && tableId !== "undefined") {
+      filter.table = tableId;
+    }
+
+    if (date && date !== "undefined") {
       const startOfDay = new Date(date);
       startOfDay.setHours(0, 0, 0, 0);
 
@@ -117,19 +122,11 @@ export async function GET(req: NextRequest) {
       filter.time = { $gte: startOfDay, $lte: endOfDay };
     }
 
-    if (tableId) {
-      filter.table = tableId;
-    }
-
-    const reservations = await Reservation.find(filter, {
-      duration: 0,
-      activeOrderId: 0,
-      status: 0,
-    })
+    const reservations = await Reservation.find(filter)
       .populate("table")
       .sort({ time: 1 });
 
-    return NextResponse.json({ reservations });
+    return NextResponse.json({ success: true, reservations });
   } catch (error) {
     console.error("Error fetching reservations:", error);
     return NextResponse.json(
@@ -138,3 +135,4 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
