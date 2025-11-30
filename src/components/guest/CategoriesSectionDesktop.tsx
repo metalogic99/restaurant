@@ -43,41 +43,70 @@ const imageBase = "/guest/menu";
 const productImages = {
   "Appetizers and Snacks": {
     "Potato Varieties": [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
-    "Pakoda Platter": [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
-    Snacks: [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
+    "Pakoda Platter": [`${imageBase}/pakooda.png`],
+    Snacks: [`${imageBase}/onion-rings.png`, `${imageBase}/paneerChilly.png`],
     "Street Food Favourites": [
-      `${imageBase}/fries.png`,
-      `${imageBase}/pakooda.png`,
+      `${imageBase}/samosa.png`,
+      `${imageBase}/spring-roll.png`,
+      `${imageBase}/panipuri.png`,
     ],
     "Traditional & Nepali Snacks": [
-      `${imageBase}/fries.png`,
-      `${imageBase}/pakooda.png`,
+      `${imageBase}/chatpate.png`,
+      `${imageBase}/mushroomChoila.png`,
+      `${imageBase}/aalonimki.png`,
     ],
-    "Light Bites": [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
+    "Light Bites": [
+      `${imageBase}/popcornFinal.png`,
+      `${imageBase}/dynamiteRoll.png`,
+    ],
   },
   "Main Course": {
     "MO:MO (Nepali Dumplings)": [
-      `${imageBase}/fries.png`,
-      `${imageBase}/pakooda.png`,
+      `${imageBase}/momof.png`,
+      `${imageBase}/momof.png`,
+      `${imageBase}/momof.png`,
+      `${imageBase}/momof.png`,
     ],
-    "Noodles & Rice": [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
-    "Curries and Sabji": [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
-    Breads: [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
+    "Noodles & Rice": [
+      `${imageBase}/chowmein.png`,
+      `${imageBase}/thukpa.png`,
+      `${imageBase}/rice.png`,
+    ],
+    "Curries and Sabji": [
+      `${imageBase}/palak.png`,
+      `${imageBase}/paneerMasala.png`,
+      `${imageBase}/daalTadka.png`,
+      `${imageBase}/mushCurry.png`,
+      `${imageBase}/aaloo65.png`,
+      `${imageBase}/sauted.png`,
+    ],
+    Breads: [`${imageBase}/roti.png`],
     "Nepali and Indian Set Meals": [
-      `${imageBase}/fries.png`,
-      `${imageBase}/pakooda.png`,
+      `${imageBase}/thali.png`,
+      `${imageBase}/dhindo.png`,
+      `${imageBase}/kanchamba.png`,
     ],
-    "Rice & Sides": [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
-    Soups: [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
+    "Rice & Sides": [
+      `${imageBase}/jeera.png`,
+      `${imageBase}/pappad.png`,
+      `${imageBase}/spaghetti.png`,
+    ],
+    Soups: [`${imageBase}/soup1.png`, `${imageBase}/soup2.png`],
   },
   Deserts: {
-    Deserts: [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
+    Deserts: [`${imageBase}/halwa.png`, `${imageBase}/ice.png`],
   },
-  Pizza: { Pizza: [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`] },
-  Salads: { Salads: [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`] },
-  Pasta: { Pasta: [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`] },
+  Pizza: {
+    Pizza: [`${imageBase}/pizza2.png`, `${imageBase}/pizza.png`],
+  },
+  Salads: { Salads: [`${imageBase}/salad2.png`, `${imageBase}/ysalad.png`] },
+  Pasta: { Pasta: [`${imageBase}/pasta.png`] },
   Breakfast: {
-    Breakfast: [`${imageBase}/fries.png`, `${imageBase}/pakooda.png`],
+    Breakfast: [
+      `${imageBase}/jam.png`,
+      `${imageBase}/corntoast.png`,
+      `${imageBase}/curdf.png`,
+    ],
   },
 } as const;
 

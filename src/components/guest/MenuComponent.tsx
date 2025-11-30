@@ -102,7 +102,7 @@ const MenuComponent = ({
   const productGroups: Product[][] = chunkProducts(products, 3);
 
   return (
-    <section className="w-full mx-auto py-10 font-inter">
+    <section className="w-full mx-auto py-10 font-inter ">
       {productGroups.map((group, index) => (
         <div
           key={index}
@@ -110,7 +110,7 @@ const MenuComponent = ({
             index % 2 === 0 ? "" : "flex-row-reverse"
           }`}
         >
-          <div className="md:w-1/2 w-full">
+          <div className="md:w-1/2 w-full ">
             {group.map((product, i) => (
               <div key={i} className={i !== 0 ? "mt-6" : ""}>
                 <div className="flex justify-between items-start">
@@ -124,7 +124,7 @@ const MenuComponent = ({
             ))}
           </div>
 
-          <div className="hidden justify-center items-center md:flex md:w-1/2">
+          <div className="hidden justify-center items-center md:flex md:w-1/2 h-full ">
             <motion.div
               initial={{
                 opacity: 0,
@@ -144,13 +144,15 @@ const MenuComponent = ({
               }}
               viewport={{ once: true, amount: 0.3 }}
             >
-              <Image
-                src={images[index] ? images[index] : "/fallbackImage.png"}
-                alt={group[0]?.name || "Dish Image"}
-                width={240}
-                height={240}
-                className="rounded-full object-cover w-72 h-72"
-              />
+              <div className="w-72 h-72">
+                <Image
+                  src={images[index] ? images[index] : "/fallbackImage.png"}
+                  alt={group[0]?.name || "Dish Image"}
+                  width={250}
+                  height={250}
+                  className="object-cover w-full h-full"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
