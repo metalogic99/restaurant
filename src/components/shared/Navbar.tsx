@@ -53,6 +53,8 @@ const Navbar = () => {
     };
   }, []);
 
+  if (pathname === "/guest") return <></>;
+
   return (
     <div className="w-full h-20 border border-foreground flex items-center justify-between px-6">
       {/* Hamburger menu */}

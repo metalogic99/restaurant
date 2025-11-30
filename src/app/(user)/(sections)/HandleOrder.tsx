@@ -30,7 +30,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
   isTakeaway = false,
 }) => {
   const user = useUser();
-  const role = JSON.parse(user.user.value).role;
+  const role = user?.user?.role;
   const router = useRouter();
   const socket = useSocket();
   useSocketEvents(tableId);

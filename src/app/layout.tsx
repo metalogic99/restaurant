@@ -80,6 +80,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${prociono.variable} ${rocknRoll.variable} ${roboto.variable} ${inter.variable} ${lora.variable} antialiased`}
       >
         <UserProvider user={user}>
+         
           <MainLayout>{children}</MainLayout>
           <Toaster />
         </UserProvider>
