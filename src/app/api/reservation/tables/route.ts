@@ -66,6 +66,8 @@
 //   }
 // }
 
+// export const dynamic = "force-dynamic";
+
 import connectDB from "@/utils/connectDB";
 import Reservation from "@/models/reservation.model";
 import Table from "@/models/tableModel";
@@ -117,6 +119,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ success: true, tables: availableTables });
   } catch (error) {
+    console.log("ERROR FROM HERE", error)
     console.error("Error Fetching Available Tables:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import {
@@ -66,12 +68,12 @@ export const metadata: Metadata = {
   description: "Mintro Restaurant Pos",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = getUser();
+  const user = await getUser();
   return (
     <html lang="en">
       <body

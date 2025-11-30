@@ -7,12 +7,10 @@ import Loading from "@/components/shared/Loading";
 import { useRouter } from "next/navigation";
 import useSocketEvents from "@/utils/socketHandler";
 import { ReservationPop } from "@/components/user/tableSection/ReservationPop";
-import { useUser } from "@/components/providers/RoleProvider";
 
 const AllTableSection = () => {
   useSocketEvents();
-  const user = useUser();
-  const role = JSON.parse(user.user.value).role;
+
   const [currentFilter, setCurrentFilter] = useState<string>("all");
   const { data, isLoading, error } = useGetAllTables();
   const router = useRouter();
@@ -85,7 +83,7 @@ const AllTableSection = () => {
             <span className="text-lg font-semibold text-white">Take away</span>
           </button>
         </div>
-        {(role === "admin" || role === "receptionist") && <ReservationPop />}
+        <ReservationPop />
         {!filteredTable ? (
           <div>Cant filter tables</div>
         ) : (

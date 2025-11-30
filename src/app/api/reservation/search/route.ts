@@ -1,3 +1,5 @@
+// export const dynamic = "force-dynamic";
+
 import { authenticate } from "@/middleware/authentication";
 import Reservation from "@/models/reservation.model";
 import connectDB from "@/utils/connectDB";

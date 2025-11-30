@@ -1,3 +1,6 @@
+
+// export const dynamic = "force-dynamic";
+
 import { authenticate } from "@/middleware/authentication";
 import Order from "@/models/orders.model";
 import Product from "@/models/product.model";
