@@ -45,7 +45,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-4xl flex flex-col md:flex-row shadow-xl rounded-2xl overflow-hidden bg-white border border-gray-100">
         {/* Left Side Image */}
-        <div className="hidden md:flex w-1/2 bg-gradient-to-br from-orange-50 to-amber-50 items-center justify-center p-8">
+        <div className="hidden md:flex w-1/2 bg-gradient-to-br from-gray-50 to-amber-50 items-center justify-center p-8">
           <Image
             src="/login.svg"
             alt="Login Illustration"
@@ -60,7 +60,7 @@ export default function LoginPage() {
         <div className="w-full md:w-1/2 p-8">
           <Card className="w-full border-0 shadow-none bg-transparent">
             <CardHeader className="text-center space-y-4">
-              <div className="mx-auto w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center shadow-sm">
+              <div className="mx-auto w-16 h-16 bg-gradient-to-br from-orange to-amber-500 rounded-full flex items-center justify-center shadow-sm">
                 <Lock className="w-6 h-6 text-white" />
               </div>
               <CardTitle className="text-2xl font-bold text-gray-800">
@@ -82,7 +82,7 @@ export default function LoginPage() {
                       type="username"
                       {...register("userName")}
                       placeholder="Enter your username"
-                      className="pl-10 h-11 rounded-lg border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+                      className="pl-10 h-11 rounded-lg border-gray-300 focus:ring-orange focus:border-orange"
                     />
                   </div>
                   {errors.userName && touchedFields.userName && (
@@ -127,7 +127,7 @@ export default function LoginPage() {
 
                 <Button
                   type="submit"
-                  className="w-full h-11 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all"
+                  className="w-full h-11 bg-gradient-to-r from-orange to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all"
                 >
                   {loginLoading ? <LoadingSmall /> : "Login"}
                 </Button>
