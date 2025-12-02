@@ -30,7 +30,7 @@ const AboutSection = () => {
           </div>
           <div className="flex justify-center mt-10 md:mt-0">
             <Image
-              src="/guest/qr-hand.png"
+              src="/guest/qr.png"
               alt="QR Code"
               width={600}
               height={600}

@@ -157,7 +157,7 @@ const CategoriesSectionDesktop = () => {
   }, [subCategories, selectedSubCategory]);
 
   return (
-    <section className="max-w-3xl  mx-auto font-inter px-2 md:px-0">
+    <section className="max-w-4xl mx-auto font-inter px-2 md:px-0">
       <section className="">
         <div className="flex gap-4 justify-center mb-5 flex-wrap">
           {menuData &&
@@ -190,81 +190,6 @@ const CategoriesSectionDesktop = () => {
             </span>
           ))}
         </div>
-
-        {/* <div className="grid grid-cols-2 gap-y-16"> */}
-        {/* <div>
-            <div className="flex justify-between items-start">
-              <h3 className="font-semibold text-lg">French Fries</h3>
-              <p className="font-semibold text-lg">200</p>
-            </div>
-            <p className="text-gray-500 text-sm max-w-xs mt-1">
-              Golden, crispy potato slices seasoned with salt, served with
-              ketchup or mayo.
-            </p>
-
-            <div className="flex justify-between items-start mt-6">
-              <h3 className="font-semibold text-lg">Spicy Potato</h3>
-              <p className="font-semibold text-lg">170</p>
-            </div>
-            <p className="text-gray-500 text-sm max-w-xs mt-1">
-              Thick-cut potato wedges with a crunchy coating, served with spicy
-              mayo.
-            </p>
-
-            <div className="flex justify-between items-start mt-6">
-              <h3 className="font-semibold text-lg">Mustang Aloo</h3>
-              <p className="font-semibold text-lg">230</p>
-            </div>
-            <p className="text-gray-500 text-sm max-w-xs mt-1">
-              Thinly sliced potatoes sautéed with traditional Himalayan spices.
-            </p>
-          </div> */}
-
-        {/* <div className="flex justify-center">
-            <img
-              src="/your-image-path-1.png"
-              alt="Pakoda Platter"
-              className="w-60 h-60 object-cover rounded-full"
-            />
-          </div> */}
-
-        {/* Second Set */}
-        {/* <div className="flex justify-center">
-            <img
-              src="/your-image-path-2.png"
-              alt="Pakoda Platter"
-              className="w-60 h-60 object-cover rounded-full"
-            />
-          </div> */}
-
-        {/* <div>
-            <div className="flex justify-between items-start">
-              <h3 className="font-semibold text-lg">French Fries</h3>
-              <p className="font-semibold text-lg">200</p>
-            </div>
-            <p className="text-gray-500 text-sm max-w-xs mt-1">
-              Golden, crispy potato slices seasoned with salt, served with
-              ketchup or mayo.
-            </p>
-
-            <div className="flex justify-between items-start mt-6">
-              <h3 className="font-semibold text-lg">Spicy Potato</h3>
-              <p className="font-semibold text-lg">170</p>
-            </div>
-            <p className="text-gray-500 text-sm max-w-xs mt-1">
-              Thick-cut potato wedges with a crunchy coating, served with spicy
-              mayo.
-            </p>
-
-            <div className="flex justify-between items-start mt-6">
-              <h3 className="font-semibold text-lg">Mustang Aloo</h3>
-              <p className="font-semibold text-lg">230</p>
-            </div>
-            <p className="text-gray-500 text-sm max-w-xs mt-1">
-              Thinly sliced potatoes sautéed with traditional Himalayan spices.
-            </p>
-          </div> */}
-        {/* </div> */}
         <MenuComponent
           products={products}
           images={

@@ -102,7 +102,7 @@ const MenuComponent = ({
   const productGroups: Product[][] = chunkProducts(products, 3);
 
   return (
-    <section className="w-full mx-auto py-10 font-inter ">
+    <section className="w-full max-w-3xl mx-auto py-10 font-inter ">
       {productGroups.map((group, index) => (
         <div
           key={index}
@@ -126,6 +126,7 @@ const MenuComponent = ({
 
           <div className="hidden justify-center items-center md:flex md:w-1/2 h-full ">
             <motion.div
+              key={`${index}-${products.length}`}
               initial={{
                 opacity: 0,
                 x: index % 2 === 0 ? 140 : -140,
@@ -142,7 +143,6 @@ const MenuComponent = ({
                 duration: 1.2,
                 ease: "easeOut",
               }}
-              viewport={{ once: true, amount: 0.3 }}
             >
               <div className="w-72 h-72">
                 <Image
