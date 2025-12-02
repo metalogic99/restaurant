@@ -9,7 +9,7 @@ const navbarItems = [
   { name: "Home", to: "/guest" },
   { name: "Reservation", to: "/guest/reservation" },
   { name: "About Us", to: "/guest/#about" },
-  { name: "Contact Us", to: "/guest/#contact" },
+  { name: "Contact Us", to: "#contact" },
 ];
 
 const NavbarLoggedOut = () => {
@@ -18,7 +18,7 @@ const NavbarLoggedOut = () => {
   const closeMenu = () => setOpen(false);
 
   return (
-    <div className="w-screen">
+    <div className="w-full">
       <div className="max-w-7xl mx-auto">
         <nav className="w-full flex justify-between items-center px-6 py-3">
           <div className="flex items-center gap-4">

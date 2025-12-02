@@ -28,6 +28,8 @@ export const QUERY_KEYS = {
 };
 
 export const companyInfo = {
-  number: "9851353599",
+  number: "+977 9761426264",
   address: "Babarmal, Kathmandu",
+  whatsAppLink: "https://wa.me/9761426264",
+  whatsAppNumber: "+977 9761426264",
 };

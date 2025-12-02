@@ -2,6 +2,9 @@ import Image from "next/image";
 import CommonSectionGuest from "./CommonSectionGuest";
 import LocationIcon from "./Location";
 import PhoneIcon from "./PhoneIcon";
+import { companyInfo } from "@/constant";
+import { FaWhatsapp } from "react-icons/fa";
+import Link from "next/link";
 
 export default function FooterLoggedOut() {
   return (
@@ -26,12 +29,22 @@ export default function FooterLoggedOut() {
           >
             <div className="flex items-center gap-2">
               <LocationIcon />
-              <p>Babarmal, Kathmandu</p>
+              <p>{companyInfo.address}</p>
             </div>
 
             <div className="flex items-center gap-2">
               <PhoneIcon />
-              <p>+977 9851353599</p>
+              <p>{companyInfo.number}</p>
+            </div>
+            <div>
+              <Link
+                className="flex items-center gap-2"
+                target="_blank"
+                href={companyInfo.whatsAppLink}
+              >
+                <FaWhatsapp size={24} className="text-[#ff6b00]" />
+                <p>{companyInfo.whatsAppNumber}</p>
+              </Link>
             </div>
           </div>
 
