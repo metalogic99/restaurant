@@ -1,5 +1,5 @@
 import { authenticate } from "@/middleware/authentication";
-import { Category } from "@/models/category.model";
+import { Category, SubCategory } from "@/models/category.model";
 import Product from "@/models/product.model";
 import connectDB from "@/utils/connectDB";
 import { NextResponse, NextRequest } from "next/server";
@@ -40,10 +40,10 @@ export async function GET() {
     await connectDB();
     const categories = await Category.find().populate({
       path: "subCategories",
-      model: "SubCategory",
+      model: SubCategory,
       populate: {
         path: "products",
-        model: "Product",
+        model: Product,
       },
     });
     categories.forEach((category) => {
