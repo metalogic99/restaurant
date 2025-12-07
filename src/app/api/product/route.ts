@@ -29,11 +29,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const allProducts = await Product.find({ subcategory: subcategory });
+
     const product = new Product({
       name,
       price,
       description,
       subcategory,
+      rank: allProducts.length + 1,
     });
 
     await product.save();
@@ -61,7 +64,9 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(authentication, { status: 401 });
     }
     await connectDB();
-    const products = await Product.find().populate("subcategory", "name");
+    const products = await Product.find()
+      .populate("subcategory", "name")
+      .sort({ rank: 1 });
     return NextResponse.json({ success: true, products }, { status: 200 });
   } catch (error) {
     console.log(error);

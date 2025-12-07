@@ -31,6 +31,7 @@ interface Product {
     _id: string;
     name: string;
   };
+  rank: number;
 }
 
 interface User {

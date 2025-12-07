@@ -5,6 +5,7 @@ import {
   deleteProduct,
   getProducts,
   updateProduct,
+  updateProductRank,
 } from "@/services/product.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -49,5 +50,17 @@ export const useUpdateProduct = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
+  });
+};
+
+export const useUpdateProductRank = () => {
+  // const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, rank }: { id: string; rank: number }) =>
+      updateProductRank(id, rank),
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({ queryKey: ["products"] });
+    // },
   });
 };

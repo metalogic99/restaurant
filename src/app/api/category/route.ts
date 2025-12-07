@@ -1,5 +1,5 @@
 import { authenticate } from "@/middleware/authentication";
-import { Category, SubCategory } from "@/models/category.model";
+import { Category } from "@/models/category.model";
 import Product from "@/models/product.model";
 import connectDB from "@/utils/connectDB";
 import { NextResponse, NextRequest } from "next/server";
@@ -37,18 +37,19 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-    // const authentication = await authenticate(req, ["admin", "waiter", "reception"]);
-    // if (!authentication.success) {
-    //   return NextResponse.json(authentication, { status: 401 });
-    // }
     await connectDB();
     const categories = await Category.find().populate({
       path: "subCategories",
-      model: SubCategory,
+      model: "SubCategory",
       populate: {
         path: "products",
-        model: Product,
+        model: "Product",
       },
+    });
+    categories.forEach((category) => {
+      category.subCategories.forEach((subcat: any) => {
+        subcat.products.sort((a: Product, b: Product) => a.rank - b.rank);
+      });
     });
     return NextResponse.json(categories, { status: 200 });
   } catch (error) {

@@ -3,41 +3,6 @@ import { useGetCategories } from "@/hooks/category.hooks";
 import React, { useEffect, useMemo, useState } from "react";
 import MenuComponent from "./MenuComponent";
 
-// const productImages = {
-//   "Appetizers and Snacks": {
-//     "Potato Varieties": ["image1.jpg", "image2.jpg"],
-//     "Pakoda Platter": ["image1.jpg", "image2.jpg"],
-//     Snacks: ["image1.jpg", "image2.jpg"],
-//     "Street Food Favourites": ["image1.jpg", "image2.jpg"],
-//     "Traditional & Nepali Snacks": ["image1.jpg", "image2.jpg"],
-//     "Light Bites": ["image1.jpg", "image2.jpg"],
-//   },
-//   "Main Course": {
-//     "MO:MO (Nepali Dumplings)": ["image1.jpg", "image2.jpg"],
-//     "Noodles & Rice": ["image1.jpg", "image2.jpg"],
-//     "Curries and Sabji": ["image1.jpg", "image2.jpg"],
-//     Breads: ["image1.jpg", "image2.jpg"],
-//     "Nepali and Indian Set Meals": ["image1.jpg", "image2.jpg"],
-//     "Rice & Sides": ["image1.jpg", "image2.jpg"],
-//     Soups: ["image1.jpg", "image2.jpg"],
-//   },
-//   Deserts: {
-//     Deserts: ["image1.jpg", "image2.jpg"],
-//   },
-//   Pizza: {
-//     Pizza: ["image1.jpg", "image2.jpg"],
-//   },
-//   Salads: {
-//     Salads: ["image1.jpg", "image2.jpg"],
-//   },
-//   Pasta: {
-//     Pasta: ["image1.jpg", "image2.jpg"],
-//   },
-//   Breakfast: {
-//     Breakfast: ["image1.jpg", "image2.jpg"],
-//   },
-// };
-
 const imageBase = "/guest/menu";
 
 const productImages = {
@@ -58,6 +23,11 @@ const productImages = {
     "Light Bites": [
       `${imageBase}/popcornFinal.png`,
       `${imageBase}/dynamiteRoll.png`,
+    ],
+    "Snacks & Street Classics": [
+      `${imageBase}/chipsChilly.png`,
+      `${imageBase}/honeychilly.png`,
+      `${imageBase}/breadPakoda.png`,
     ],
   },
   "Main Course": {
@@ -85,6 +55,7 @@ const productImages = {
       `${imageBase}/thali.png`,
       `${imageBase}/dhindo.png`,
       `${imageBase}/kanchamba.png`,
+      `${imageBase}/fapar.png`,
     ],
     "Rice & Sides": [
       `${imageBase}/jeera.png`,
@@ -108,13 +79,61 @@ const productImages = {
       `${imageBase}/curdf.png`,
     ],
   },
+  "PREMIUM VEG DINNER MENU": {
+    "Global & Signatures Specials": [
+      `${imageBase}/dreamy.png`,
+      `${imageBase}/ramen.png`,
+      `${imageBase}/pannerKaliMirch.png`,
+      `${imageBase}/galouti.png`,
+      `${imageBase}/cauliflower.png`,
+      `${imageBase}/patatas.png`,
+      `${imageBase}/karela.png`,
+      `${imageBase}/burrito.png`,
+    ],
+  },
+  Coffee: {
+    "Brewed Coffee": [
+      `${imageBase}/cfe.png`,
+      `${imageBase}/gahwa.png`,
+
+      `${imageBase}/brew.png`,
+    ],
+    "Espresso Classics": [
+      `${imageBase}/solo.png`,
+      `${imageBase}/americano.png`,
+      `${imageBase}/latte.png`,
+    ],
+    "Signature Espresso Creations": [`${imageBase}/madness.png`],
+    "Iced & Blended Beverages": [
+      `${imageBase}/iceLatte.png`,
+      `${imageBase}/frape.png`,
+      `${imageBase}/icecap.png`,
+    ],
+    "Coffee Alternatives & Tea": [
+      `${imageBase}/milk.png`,
+      `${imageBase}/blck.png`,
+      `${imageBase}/cold.png`,
+      `${imageBase}/masala.png`,
+      `${imageBase}/belgium.png`,
+      `${imageBase}/chamo.png`,
+      `${imageBase}/season.png`,
+      `${imageBase}/lemonade.png`,
+    ],
+  },
+  Mocktails: {
+    "Mocktails & Signature Refresher": [
+      `${imageBase}/blueberry.png`,
+      `${imageBase}/pinkPortion.png`,
+      `${imageBase}/berry.png`,
+      `${imageBase}/cindrella.png`,
+    ],
+  },
+  "Our Signatures": {
+    Signatures: [`${imageBase}/gold.png`],
+  },
 } as const;
 
 const CategoriesSectionDesktop = () => {
-  //   const [selectedCategory, setSelectedCategory] = useState<string>(
-  //     categories[0]
-  //   );
-
   const { data } = useGetCategories();
 
   const menuData = useMemo(() => {
@@ -132,7 +151,7 @@ const CategoriesSectionDesktop = () => {
       return [];
     }
     const filteredCategory = menuData.filter(
-      (category) => category.name === selectedCategory
+      (category) => category.name.trim() === selectedCategory
     );
     if (filteredCategory.length > 0) {
       if (filteredCategory[0].subCategories.length > 0) {
@@ -164,9 +183,11 @@ const CategoriesSectionDesktop = () => {
             menuData.map((item) => (
               <button
                 key={item._id}
-                onClick={() => setSelectedCategory(item.name)}
+                onClick={() => setSelectedCategory(item.name.trim())}
                 className={` text-white ${
-                  item.name === selectedCategory ? "bg-orange" : "bg-orange/70"
+                  item.name.trim() === selectedCategory
+                    ? "bg-orange"
+                    : "bg-orange/70"
                 } px-4 py-2 rounded-md text-sm tracking-wide font-medium shrink-0 `}
               >
                 {item.name}

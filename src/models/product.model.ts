@@ -18,6 +18,11 @@ const productSchema = new mongoose.Schema({
     ref: "SubCategory",
     required: true,
   },
+  rank: {
+    type: Number,
+    required: true,
+    default: 1,
+  },
 });
 
 const Product =

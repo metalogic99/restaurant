@@ -15,7 +15,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const authentication = await authenticate(req, ["admin","chef"]);
+    const authentication = await authenticate(req, ["admin", "chef"]);
     if (!authentication.success) {
       return NextResponse.json(authentication, { status: 401 });
     }

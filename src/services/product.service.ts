@@ -31,6 +31,16 @@ export const updateProduct = async (id: string, data: ProductFormValues) => {
   }
 };
 
+export const updateProductRank = async (id: string, rank: number) => {
+  try {
+    const response = await api.patch(`/product/reorder/${id}`, { rank });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw handleApiError(error as Error);
+  }
+};
+
 export const deleteProduct = async (id: string) => {
   try {
     const response = await api.delete(`/product/${id}`);

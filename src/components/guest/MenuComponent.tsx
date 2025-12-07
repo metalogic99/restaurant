@@ -91,6 +91,7 @@ const MenuComponent = ({
   products: Product[];
   images: string[];
 }) => {
+  console.log("images is", images);
   const chunkProducts = (arr: Product[], size: number) => {
     return arr.reduce((chunks: Product[][], item, idx) => {
       if (idx % size === 0) chunks.push([item]);
