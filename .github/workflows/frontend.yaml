@@ -1,0 +1,155 @@
+name: Frontend Deployment
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+env:
+  awsRegion: ${{ secrets.AWS_REGION }}
+  CODE_FILE_NAME: ${{ github.event.repository.name }}
+  CODE_ZIP_FILE: ${{ github.event.repository.name }}.zip
+  CODEBASE_BUCKET_NAME: mtalg-as1-meta-d-s3-codebase
+  DOMAIN_NAME: mintrestro
+  DESTINATION_PROJECT_PATH: /home/ssm-user/mintrestro
+  PROJECT_DIR: /home/ssm-user/mintrestro/${{ github.event.repository.name }}
+  aws_instance_name: metalogic-thadaraiadhikari-prod
+  APP_NAME: mint-restro
+  FRONTEND_PORT: 3001
+  BACKEND_PORT: 3001
+  awsAccessKey: ${{ secrets.AWS_ACCESS_KEY }}
+  awsSecretKey: ${{ secrets.AWS_SECRET_KEY }}
+
+jobs:
+  Artifacts-Building:
+    name: Artifacts-Building
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set AWS Secret Access Key
+        run: echo "AWS_SECRET_ACCESS_KEY=${{ env.awsSecretKey }}" >> $GITHUB_ENV
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ env.awsAccessKey }}
+          aws-secret-access-key: ${{ env.awsSecretKey }}
+          aws-region: ${{ env.awsRegion }}
+
+      - name: Get the Instance IP address
+        id: get-instance-ip
+        run: |
+          instance_ip=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=${{ env.aws_instance_name }}" \
+                      "Name=instance-state-name,Values=running" \
+            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --output text \
+            --region ${{ env.awsRegion }})
+          echo "INSTANCE_IP=$instance_ip" >> $GITHUB_ENV
+      - name: Print the Instance IP
+        run: echo "${{ env.INSTANCE_IP }}"
+
+      - name: Creating .env for Frontend
+        run: |
+          cat << EOF > .env
+          NODE_ENV=production
+          PORT=${{ env.FRONTEND_PORT }}
+          NEXT_PUBLIC_SOCKET_API = https://mintresto.com
+          NEXT_PUBLIC_BASE_URL = https://mintresto.com/api
+          SESSION_SECRET=verysecret
+          CLOUDINARY_CLOUD_NAME = dv1rchvtj
+          CLOUDINARY_API_KEY = 878858771157222
+          CLOUDINARY_API_SECRET = 1NLjSu-6zZhxnXF_RLV1idyAj7A
+          MONGO_URI = mongodb+srv://metalogic:memoryking123@cluster0.88ptydc.mongodb.net/Restaurant
+          EOF
+      - name: Install dependencies for Frontend
+        run: npm install
+
+      - name: Build Frontend
+        run: npm run build
+
+      - name: Zip the Frontend Code
+        run: |
+          zip -r ${{ env.CODE_ZIP_FILE }} .env .next public package.json package-lock.json next.config.mjs server.js node_modules
+      - name: Upload Frontend ZIP to S3
+        run: aws s3 cp ${{ env.CODE_ZIP_FILE }} s3://${{ env.CODEBASE_BUCKET_NAME }}/
+
+  Artifacts-Transport:
+    needs: Artifacts-Building
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v4
+
+      - name: Set AWS Secret Access Key
+        run: echo "AWS_SECRET_ACCESS_KEY=${{ env.awsSecretKey }}" >> $GITHUB_ENV
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ env.awsAccessKey }}
+          aws-secret-access-key: ${{ env.awsSecretKey }}
+          aws-region: ${{ env.awsRegion }}
+
+      - name: Get the instance ID
+        id: get-instance
+        run: |
+          instance_id=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=${{ env.aws_instance_name }}" \
+                      "Name=instance-state-name,Values=running" \
+            --query 'Reservations[*].Instances[*].InstanceId' \
+            --output text \
+            --region ${{ env.awsRegion }})
+          echo "INSTANCE_ID=$instance_id" >> $GITHUB_ENV
+      - name: Print the Instance ID
+        run: echo "${{ env.INSTANCE_ID }}"
+
+      - name: Sync files from S3 to EC2 and set ownership
+        id: sync-files
+        uses: adexltd/aws-ssm-send-command@master
+        with:
+          aws-access-key-id: ${{ env.awsAccessKey }}
+          aws-secret-access-key: ${{ env.awsSecretKey }}
+          aws-region: ${{ env.awsRegion }}
+          instance-ids: ${{ env.INSTANCE_ID }}
+          command: |
+            sudo aws s3 cp s3://${{ env.CODEBASE_BUCKET_NAME }}/${{ env.CODE_ZIP_FILE }} ${{ env.DESTINATION_PROJECT_PATH }}/ &&
+            sudo unzip -o ${{ env.DESTINATION_PROJECT_PATH }}/${{ env.CODE_ZIP_FILE }} -d ${{ env.PROJECT_DIR }} &&
+            sudo chown -R ssm-user:ssm-user ${{ env.PROJECT_DIR }} &&
+            ls -al ${{ env.DESTINATION_PROJECT_PATH }} &&
+            cd ${{ env.PROJECT_DIR }} && npm install
+      - name: Check Sync Files Command Status
+        uses: ./.github/actions/check-ssm-command-status
+        with:
+          aws-region: ${{ env.awsRegion }}
+          command-id: ${{ steps.sync-files.outputs.command-id }}
+
+      - name: Deploy Frontend with PM2
+        id: pm2_run_frontend
+        uses: adexltd/aws-ssm-send-command@master
+        with:
+          aws-access-key-id: ${{ env.awsAccessKey }}
+          aws-secret-access-key: ${{ env.awsSecretKey }}
+          aws-region: ${{ env.awsRegion }}
+          instance-ids: ${{ env.INSTANCE_ID }}
+          command: |
+            sudo su - ssm-user -c "cd ${{ env.PROJECT_DIR }} &&
+            export PATH=/var/lib/nvm/versions/node/v20.16.0/bin:\$PATH &&
+            /var/lib/nvm/versions/node/v20.16.0/bin/pm2 list &&
+            /var/lib/nvm/versions/node/v20.16.0/bin/pm2 stop '${{ env.APP_NAME }}' --force || true &&
+            /var/lib/nvm/versions/node/v20.16.0/bin/pm2 delete '${{ env.APP_NAME }}' --force || true &&
+            sleep 10 &&
+            /var/lib/nvm/versions/node/v20.16.0/bin/pm2 start npm --name '${{ env.APP_NAME }}' --force -- run AWSstart"
+
+      - name: Check command status for PM2
+        uses: ./.github/actions/check-ssm-command-status
+        with:
+          aws-region: ${{ env.awsRegion }}
+          command-id: ${{ steps.pm2_run_frontend.outputs.command-id }}
