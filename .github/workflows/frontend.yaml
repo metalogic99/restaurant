@@ -60,8 +60,8 @@ jobs:
           cat << EOF > .env
           NODE_ENV=production
           PORT=${{ env.FRONTEND_PORT }}
-          NEXT_PUBLIC_SOCKET_API = https://mintresto.com
-          NEXT_PUBLIC_BASE_URL = https://mintresto.com/api
+          NEXT_PUBLIC_SOCKET_API = https://mintrestro.com
+          NEXT_PUBLIC_BASE_URL = https://mintrestro.com/api
           JWT_SECRET = verysecret
           CLOUDINARY_CLOUD_NAME = dv1rchvtj
           CLOUDINARY_API_KEY = 878858771157222
