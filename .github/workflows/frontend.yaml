@@ -62,7 +62,7 @@ jobs:
           PORT=${{ env.FRONTEND_PORT }}
           NEXT_PUBLIC_SOCKET_API = https://mintresto.com
           NEXT_PUBLIC_BASE_URL = https://mintresto.com/api
-          SESSION_SECRET=verysecret
+          JWT_SECRET = verysecret
           CLOUDINARY_CLOUD_NAME = dv1rchvtj
           CLOUDINARY_API_KEY = 878858771157222
           CLOUDINARY_API_SECRET = 1NLjSu-6zZhxnXF_RLV1idyAj7A
