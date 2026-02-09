@@ -4,12 +4,11 @@ import { Server } from "socket.io";
 import next from "next";
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
-const handle = app.getRequestHandler();
+// const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
   const httpServer = createServer(server);
-
   const io = new Server(httpServer, {
     cors: {
       origin: "*",
@@ -62,11 +61,17 @@ app.prepare().then(() => {
     });
   });
 
-  server.all("*", (req, res) => {
-    return handle(req, res);
+  // server.all("*", (req, res) => {
+  //   return handle(req, res);
+  // });
+
+  server.use((req, res) => {
+    app.getRequestHandler()(req, res);
   });
 
-  httpServer.listen(3001, () => {
-    console.log("> Ready on http://localhost:3001");
+  const PORT = process.env.PORT || 3001;
+
+  httpServer.listen(PORT, () => {
+    console.log("> Ready on http://localhost:" + PORT);
   });
 });

@@ -9,6 +9,9 @@ export async function middleware(request: NextRequest) {
   if (/\.(png|svg|jpg|webp|mp3|geojson|pdf|gif|css)$/.test(pathname)) {
     return;
   }
+  if (pathname.startsWith("/api")) {
+    return NextResponse.next();
+  }
 
   if (!JWT_SECRET) {
     return new NextResponse("JWT secret not defined", { status: 500 });
@@ -31,7 +34,7 @@ export async function middleware(request: NextRequest) {
   try {
     const { payload } = await jwtVerify(
       token,
-      new TextEncoder().encode(JWT_SECRET)
+      new TextEncoder().encode(JWT_SECRET),
     );
     if (!payload) {
       const guestUrl = new URL(`/guest`, request.url);
