@@ -7,6 +7,8 @@
     "dev": "cross-env NODE_ENV=development node server.js",
     "start": "cross-env NODE_ENV=production node server.js",
     "build": "next build",
+    "deploy-start": "NODE_ENV=production node server.js",
+    "AWSstart": "NODE_ENV=production node server.js",
     "lint": "next lint"
   },
   "dependencies": {
