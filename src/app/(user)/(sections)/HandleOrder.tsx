@@ -43,7 +43,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
   const [localDataResult, setLocalData] = useState([]);
   const [editingDiscount, setEditDiscount] = useState(false);
   const [isPercentage, setIsPercentage] = useState<boolean>(
-    data && data.data && data?.data?.discount ? data.data.isPercentage : true
+    data && data.data && data?.data?.discount ? data.data.isPercentage : true,
   );
 
   const [showProductModifyModal, setShowModifyOrderModal] = useState<{
@@ -56,16 +56,16 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
     type: string;
   } | null>(null);
   const [discount, setDiscount] = useState<number>(
-    data && data.data && data?.data?.discount ? data.data.discount : 0
+    data && data.data && data?.data?.discount ? data.data.discount : 0,
   );
   const [billModal, setBillModal] = useState<boolean>(false);
 
   useEffect(() => {
     setDiscount(
-      data && data.data && data?.data?.discount ? data.data.discount : 0
+      data && data.data && data?.data?.discount ? data.data.discount : 0,
     );
     setIsPercentage(
-      data && data.data && data?.data?.discount ? data.data.isPercentage : true
+      data && data.data && data?.data?.discount ? data.data.isPercentage : true,
     );
   }, [data?.data, data]);
 
@@ -90,7 +90,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
       grossTotal += data.data.orderedProducts.reduce(
         (sum: number, product: OrderedProduct) =>
           sum + product.product.price * product.quantity,
-        0
+        0,
       );
     }
 
@@ -98,7 +98,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
       grossTotal += localDataResult.reduce(
         (sum: number, product: LocalOrderItem) =>
           sum + product.product.price * product.quantity,
-        0
+        0,
       );
     }
 
@@ -157,7 +157,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
           productId: added.product._id,
           quantity: added.quantity,
           notes: added.notes || "",
-        })
+        }),
       );
       updateOrder(
         {
@@ -178,7 +178,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
           onError: (error: any) => {
             toast.error(error.message || "Failed to update order");
           },
-        }
+        },
       );
     } else {
       const addOrderData: AddOrder[] = localStorageData.map(
@@ -186,7 +186,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
           productId: added.product._id,
           quantity: added.quantity,
           notes: added.notes || "",
-        })
+        }),
       );
       addOrder(
         {
@@ -200,7 +200,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
               data.message ||
                 (isTakeaway
                   ? "Takeaway order created successfully"
-                  : "Order created successfully")
+                  : "Order created successfully"),
             );
             if (socket && socket.connected) {
               socket.emit("updateOrder", tableId);
@@ -215,7 +215,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
           onError: (error: any) => {
             toast.error(error.message || "Failed to create order");
           },
-        }
+        },
       );
     }
   };
@@ -296,7 +296,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
                         }
                       >
                         <td className="p-2 sm:p-3 text-xs sm:text-sm">
-                          {product.product.name}
+                          {product.product?.name}
                         </td>
                         <td className="p-2 sm:p-3 text-xs sm:text-sm">
                           {product.quantity}
@@ -304,7 +304,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
                         <td className="p-2 sm:p-3 text-xs sm:text-sm font-medium">
                           <div className="flex items-center gap-2">
                             <span>
-                              Rs. {product.product.price * product.quantity}
+                              Rs. {product.product?.price * product.quantity}
                             </span>
                             {product.status === "completed" && (
                               <CheckCheck
@@ -417,24 +417,28 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
               data.data?.orderedProducts.length &&
               data.data?.orderedProducts?.length > 0 &&
               data.data.orderedProducts.map((product: OrderedProduct) => (
-                <div
-                  key={product.product._id}
-                  className="bg-gray-50 p-3 rounded-lg border"
-                >
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="font-medium text-sm text-gray-800 truncate flex-1 mr-2">
-                      {product.product.name}
-                    </span>
-                    <span className="text-sm text-gray-600">
-                      ×{product.quantity}
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <span className="font-semibold text-sm text-green-600">
-                      Rs. {product.product.price * product.quantity}
-                    </span>
-                  </div>
-                </div>
+                <>
+                  {product && (
+                    <div
+                      key={product.product?._id}
+                      className="bg-gray-50 p-3 rounded-lg border"
+                    >
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="font-medium text-sm text-gray-800 truncate flex-1 mr-2">
+                          {product.product?.name}
+                        </span>
+                        <span className="text-sm text-gray-600">
+                          ×{product.quantity}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <span className="font-semibold text-sm text-green-600">
+                          Rs. {product.product?.price * product.quantity}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </>
               ))}
 
             {localDataResult?.length > 0 &&
