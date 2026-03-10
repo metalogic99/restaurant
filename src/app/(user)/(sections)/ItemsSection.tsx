@@ -264,25 +264,6 @@ const ItemsSection = ({ tableId }: { tableId: string }) => {
     <section className="w-full lg:w-1/2 px-2 sm:px-4 lg:px-0">
       <div className="w-full flex flex-col gap-4">
         {/* 1. Global Search Bar */}
-        <div className="w-full">
-          <div className="relative group">
-            <input
-              type="text"
-              placeholder="Search all items (e.g. 'potato')..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full h-11 px-4 py-2 border-2 border-mintGreen rounded-lg focus:border-forestGreen focus:ring-2 focus:ring-forestGreen/10 outline-none transition-all shadow-sm"
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-forestGreen font-bold"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        </div>
 
         {/* 2. Filters (Disabled/Faded if searching) */}
         <div
@@ -320,6 +301,25 @@ const ItemsSection = ({ tableId }: { tableId: string }) => {
                 </option>
               ))}
             </select>
+          </div>
+        </div>
+        <div className="w-full">
+          <div className="relative group">
+            <input
+              type="text"
+              placeholder="Search all items (e.g. 'potato')..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full h-11 px-4 py-2 border-2 border-mintGreen rounded-lg focus:border-forestGreen focus:ring-2 focus:ring-forestGreen/10 outline-none transition-all shadow-sm"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-forestGreen font-bold"
+              >
+                ✕
+              </button>
+            )}
           </div>
         </div>
       </div>

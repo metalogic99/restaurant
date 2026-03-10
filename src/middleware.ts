@@ -67,7 +67,7 @@ export async function middleware(request: NextRequest) {
     }
   } catch (error) {
     console.error("JWT verification failed:", error);
-    const loginUrl = new URL(`/login`, request.url);
+    const loginUrl = new URL(`/guest`, request.url);
     return NextResponse.redirect(loginUrl);
   }
 }
