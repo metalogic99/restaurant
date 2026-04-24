@@ -28,58 +28,46 @@ const getStatusColor = (status: string) => {
 const TableCard = ({ table }: { table: Table }) => {
   const router = useRouter();
 
-  const tableClickHandler = (tableId: string) => {
-    router.push(`/${tableId}`);
-  };
   return (
     <div
-      onClick={() => tableClickHandler(table._id)}
-      className="bg-white rounded-xl h-fit shadow-sm border cursor-pointer border-gray-200 hover:shadow-lg transition-shadow duration-200"
+      onClick={() => router.push(`/${table._id}`)}
+      className="bg-white rounded-xl h-full shadow-sm border cursor-pointer border-gray-200 hover:shadow-lg transition-shadow duration-200 flex flex-col"
     >
-      <div className="p-6 pb-4">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="bg-gray-100 p-2 rounded-lg">
-              <span className="text-lg font-bold text-gray-900">
-                {table.tableName}
-              </span>
-            </div>
+      {/* Reduced padding for mobile (p-3), normal for desktop (p-6) */}
+      <div className="p-3 md:p-6 pb-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <div className="bg-gray-100 p-2 rounded-lg w-fit">
+            <span className="text-sm md:text-lg font-bold text-gray-900 whitespace-nowrap">
+              {table.tableName}
+            </span>
           </div>
+
           <div
-            className={`px-3 py-1 rounded-full text-xs font-medium border flex items-center gap-1 ${getStatusColor(
-              table.status
-            )}`}
+            className={`px-2 py-1 rounded-full text-[10px] md:text-xs font-medium border flex items-center gap-1 w-fit ${getStatusColor(table.status)}`}
           >
             {getStatusIcon(table.status)}
-            {table.status}
+            <span className="capitalize">{table.status}</span>
           </div>
         </div>
       </div>
-      <div className="px-6 pb-6">
+
+      <div className="px-3 md:px-6 pb-4 flex-grow">
         {table.status === "occupied" ? (
-          <div className="bg-red-50 rounded-lg p-4 mb-4 border border-red-100">
-            <h4 className="font-medium text-red-900 mb-2 flex items-center gap-2">
-              <DollarSign className="w-4 h-4" />
-              Current Orders
+          <div className="bg-red-50 rounded-lg p-2 md:p-4 mb-3 border border-red-100">
+            <h4 className="text-xs md:text-sm font-medium text-red-900 mb-1 flex items-center gap-1">
+              <DollarSign className="w-3  md:w-4 h-4" />
+              Orders
             </h4>
-            <div className="flex items-center justify-between text-sm">
-              <div>
-                <span className="text-red-700">Duration:</span>{" "}
-                {table.duration.split(" ")[4]}
-              </div>
+            <div className="text-[10px] md:text-sm">
+              <span className="text-red-700">Dur:</span>{" "}
+              {table.duration.split(" ")[4]}
             </div>
           </div>
         ) : (
-          <div className="bg-white flex-1 rounded-lg p-4 mb-4 border border-mintGreen">
-            <h4 className="font-medium text-red-900 mb-2 flex items-center gap-2">
-              <DollarSign className="w-4 h-4" />
-              Current Orders
-            </h4>
-            <div className="flex items-center justify-between text-sm">
-              <div>
-                <span className="text-red-700">Duration:</span>
-              </div>
-            </div>
+          <div className="bg-gray-50 rounded-lg p-2 md:p-4 mb-3 border border-dashed border-gray-200">
+            <p className="text-[10px] md:text-sm text-gray-400 text-center">
+              Table Ready
+            </p>
           </div>
         )}
         <ActionsTable table={table} />
@@ -89,5 +77,3 @@ const TableCard = ({ table }: { table: Table }) => {
 };
 
 export default TableCard;
-
-

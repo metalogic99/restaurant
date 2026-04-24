@@ -29,7 +29,6 @@ const Reservation = () => {
   const { mutate, isPending } = useDeleteReservation(activeTab);
 
   const handleDelete = async (id: string) => {
-    console.log("string is", id);
     mutate(id, {
       onSuccess: () => {
         toast.success("Reservation Deletion Successful");

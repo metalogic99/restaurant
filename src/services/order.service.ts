@@ -1,7 +1,7 @@
 import { api, handleApiError } from ".";
 
 export const getOrderByTableId = async (
-  tableId?: string
+  tableId?: string,
 ): Promise<{
   success: boolean;
   message: string;
@@ -52,7 +52,7 @@ export const updateOrder = async (
   status?: string,
   discount?: number,
   isPercentage?: boolean,
-  productCompleted?: string
+  productCompleted?: string,
 ): Promise<{ success: boolean; message: string }> => {
   try {
     const response = await api.patch(`/order/${orderId}`, {
@@ -69,7 +69,7 @@ export const updateOrder = async (
 };
 
 export const getOrderByStatus = async (
-  status: string
+  status: string,
 ): Promise<{
   success: boolean;
   message: string;
@@ -90,6 +90,19 @@ export const getTodayOrders = async (): Promise<{
 }> => {
   try {
     const response = await api.get(`order?status=all&date=today`);
+    return response.data;
+  } catch (error) {
+    throw handleApiError(error as Error);
+  }
+};
+
+export const getInvoiceNumber = async (): Promise<{
+  success: boolean;
+  message: string;
+  data: number;
+}> => {
+  try {
+    const response = await api.get("order/invoice");
     return response.data;
   } catch (error) {
     throw handleApiError(error as Error);

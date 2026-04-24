@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useGetAllTables } from "@/hooks/tables.hooks";
 import AdminError from "@/components/admin/AdminError";
 import Loading from "@/components/shared/Loading";
@@ -59,6 +59,13 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
     data && data.data && data?.data?.discount ? data.data.discount : 0,
   );
   const [billModal, setBillModal] = useState<boolean>(false);
+
+  const currentTable = useMemo(() => {
+    if (!tables?.data) return "unknown";
+
+    const table = tables.data.find((t) => t._id === tableId);
+    return table ? table.tableName : "unknown";
+  }, [tableId, tables]);
 
   useEffect(() => {
     setDiscount(
@@ -261,7 +268,7 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
           {isTakeaway ? "Takeaway Order Summary" : "Order Summary"}
         </h2>
 
-        <div className="overflow-x-auto mb-4 sm:mb-6">
+        <div className=" mb-4 sm:mb-6">
           <div className="hidden sm:block">
             <table className="w-full border border-gray-200 rounded-md overflow-hidden min-w-full">
               <thead className="bg-gray-100 text-left">
@@ -327,12 +334,12 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
                     <tr
                       key={`local-${index}`}
                       className="border-t hover:bg-gray-50 bg-yellow-50"
-                      onClick={() =>
+                      onClick={() => {
                         setShowModifyOrderModal({
                           product: added,
                           type: "added",
-                        })
-                      }
+                        });
+                      }}
                     >
                       <td className="p-2 sm:p-3 text-xs sm:text-sm">
                         {added.product.name}
@@ -422,6 +429,12 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
                     <div
                       key={product.product?._id}
                       className="bg-gray-50 p-3 rounded-lg border"
+                      onClick={() => {
+                        setShowModifyOrderModal({
+                          product: product,
+                          type: "added",
+                        });
+                      }}
                     >
                       <div className="flex justify-between items-center mb-1">
                         <span className="font-medium text-sm text-gray-800 truncate flex-1 mr-2">
@@ -442,9 +455,15 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
               ))}
 
             {localDataResult?.length > 0 &&
-              localDataResult.map((added: LocalOrderItem, index: number) => (
+              localDataResult.map((added: any, index: number) => (
                 <div
                   key={`mobile-local-${index}`}
+                  onClick={() => {
+                    setShowModifyOrderModal({
+                      product: added,
+                      type: "added",
+                    });
+                  }}
                   className="bg-yellow-50 p-3 rounded-lg border border-orange-200"
                 >
                   <div className="flex justify-between items-center mb-1">
@@ -507,10 +526,16 @@ const HandleOrder: React.FC<HandleOrderProps> = ({
         </div>
 
         {billModal && data.data && (
-          <BillModal order={data.data} onClose={() => setBillModal(false)} />
+          <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+            <BillModal
+              order={data.data}
+              onClose={() => setBillModal(false)}
+              table={currentTable}
+            />
+          </div>
         )}
 
-        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 2xl:grid-cols-4 gap-2 sm:gap-3">
+        <div className="grid grid-cols-3  gap-2 sm:gap-3">
           <ButtonActions
             localDataResult={localDataResult}
             isLoading={updatePending || addPending}

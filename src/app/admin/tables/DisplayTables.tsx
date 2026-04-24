@@ -13,7 +13,6 @@ const DisplayTables = ({
   const handleEditTable = (table: Table) => {
     setEditingTable(table);
     setTableName(table.tableName);
-    console.log(table);
   };
   return (
     <div className="p-6">

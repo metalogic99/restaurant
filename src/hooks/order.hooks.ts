@@ -1,6 +1,7 @@
 import { QUERY_KEYS } from "@/constant";
 import {
   addOrder,
+  getInvoiceNumber,
   getOrderByStatus,
   getOrderByTableId,
   getTodayOrders,
@@ -61,7 +62,7 @@ export const useUpdateOrder = (tableId: string) => {
         status,
         discount,
         isPercentage,
-        productCompleted
+        productCompleted,
       ),
     onSettled: () => {
       queryClient.invalidateQueries({
@@ -85,5 +86,12 @@ export const useGetOrderbyStatus = (status: string) => {
   return useQuery({
     queryKey: [QUERY_KEYS.ORDERS, status],
     queryFn: () => getOrderByStatus(status),
+  });
+};
+
+export const useGetInvoiceNumber = () => {
+  return useQuery({
+    queryKey: ["invoice"],
+    queryFn: getInvoiceNumber,
   });
 };

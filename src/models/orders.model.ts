@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 export interface IOrder extends mongoose.Document {
   orderType: string;
   tableId: mongoose.Types.ObjectId;
+  invoice: number | null;
   orderedProducts: {
     product: mongoose.Types.ObjectId;
     quantity: number;
@@ -23,6 +24,7 @@ export interface IOrder extends mongoose.Document {
 
 const orderSchema = new mongoose.Schema(
   {
+    invoice: { type: Number, required: false },
     orderType: {
       type: String,
       enum: ["dineIn", "takeaway"],
@@ -78,7 +80,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);

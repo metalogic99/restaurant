@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell } from "lucide-react";
+import { ArrowLeft, Bell } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
@@ -19,6 +19,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
   const { mutate: logout, isPending } = useLogout();
+  const isHomePage = pathname === "/" || pathname === "/dashboard";
 
   const handleLogout = () => {
     logout(undefined, {
@@ -58,10 +59,23 @@ const Navbar = () => {
   return (
     <div className="w-full h-20 border border-foreground flex items-center justify-between px-6">
       {/* Hamburger menu */}
-      <div className="flex flex-col justify-center gap-1">
-        <span className="w-6 h-1 bg-forestGreen rounded-sm"></span>
-        <span className="w-4 h-1 bg-forestGreen rounded-sm"></span>
-        <span className="w-2 h-1 bg-forestGreen rounded-sm"></span>
+
+      <div className="flex items-center min-w-[40px]">
+        {!isHomePage ? (
+          <button
+            onClick={() => router.back()}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center border border-gray-100"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="text-gray-700 w-6 h-6" />
+          </button>
+        ) : (
+          <div className="flex flex-col justify-center gap-1">
+            <span className="w-6 h-1 bg-forestGreen rounded-sm"></span>
+            <span className="w-4 h-1 bg-forestGreen rounded-sm"></span>
+            <span className="w-2 h-1 bg-forestGreen rounded-sm"></span>
+          </div>
+        )}
       </div>
 
       {/* Logo */}

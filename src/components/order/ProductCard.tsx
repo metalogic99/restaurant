@@ -20,7 +20,7 @@ const ProductCard = ({
       ];
     } else {
       const productExists = currentProduct.find(
-        (current: any) => current.product._id === product._id
+        (current: any) => current.product._id === product._id,
       );
       if (productExists) {
         addedProducts = currentProduct.map((current: any) => {
@@ -45,25 +45,27 @@ const ProductCard = ({
     window.dispatchEvent(new Event("local-storage-change"));
   };
   return (
-    <div className=" p-4 flex justify-between items-start border-b border-gray-200 relative">
-      <div>
-        <h3 className="font-semibold italic text-lg text-[#1c2b22]">
-          {product.name}
-        </h3>
-        <p className="text-sm italic text-[#1c2b22] mt-1 max-w-xs">
-          {product.description}
-        </p>
-      </div>
+    <div className="border-b border-gray-200 relative">
+      <div className=" p-4 flex justify-between items-start ">
+        <div>
+          <h3 className="font-semibold italic text-lg text-[#1c2b22]">
+            {product.name}
+          </h3>
+        </div>
 
-      <div className="flex flex-col items-end space-y-2">
-        <p className="font-medium text-[#1c2b22]">Rs. {product.price}</p>
-        <button
-          onClick={addProduct}
-          className="bg-forestGreen  text-white font-semibold text-sm px-4 py-1 rounded-full shadow-sm hover:bg-forestGreen/90 transition"
-        >
-          Add
-        </button>
+        <div className="flex flex-col items-end space-y-2">
+          <p className="font-medium text-[#1c2b22]">Rs. {product.price}</p>
+          <button
+            onClick={addProduct}
+            className="bg-forestGreen  text-white font-semibold text-sm px-4 py-1 rounded-full shadow-sm hover:bg-forestGreen/90 transition"
+          >
+            Add
+          </button>
+        </div>
       </div>
+      <p className=" text-xs md:text-sm italic text-[#1c2b22] mt-1 max-w-xs">
+        {product.description}
+      </p>
     </div>
   );
 };

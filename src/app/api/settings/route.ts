@@ -13,11 +13,13 @@ export const POST = async (req: NextRequest) => {
     const phoneNumber = formData.get("phoneNumber") as string;
     const location = formData.get("location") as string;
     const logoFile = formData.get("logo") as File | null;
+    const printerIP = formData.get("printerIP") as string;
+    const vat = formData.get("vat") as string;
 
     if (!displayName || !phoneNumber || !location) {
       return NextResponse.json(
         { success: false, message: "Required fields missing" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -29,7 +31,7 @@ export const POST = async (req: NextRequest) => {
           success: false,
           message: "Settings already exist. Use update route.",
         },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -46,17 +48,19 @@ export const POST = async (req: NextRequest) => {
       phoneNumber,
       location,
       logo: logoUrl,
+      printerIP: printerIP,
+      vat: vat,
     });
 
     return NextResponse.json(
       { success: true, data: newSettings },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
       { success: false, message: "Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -67,13 +71,13 @@ export const GET = async () => {
     const settings = await Settings.findOne();
     return NextResponse.json(
       { success: true, data: settings || null },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
       { success: false, message: "Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -88,11 +92,13 @@ export const PATCH = async (req: NextRequest) => {
     const phoneNumber = formData.get("phoneNumber") as string;
     const location = formData.get("location") as string;
     const logoFile = formData.get("logo") as File | null;
+    const printerIP = formData.get("printerIP") as string;
+    const vat = formData.get("vat") as string;
 
     if (!displayName || !phoneNumber || !location) {
       return NextResponse.json(
         { success: false, message: "Required fields missing" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -112,6 +118,8 @@ export const PATCH = async (req: NextRequest) => {
       settings.phoneNumber = phoneNumber;
       settings.location = location;
       settings.logo = logoUrl;
+      settings.printerIP = printerIP;
+      settings.vat = vat;
       await settings.save();
     } else {
       settings = await Settings.create({
@@ -119,18 +127,20 @@ export const PATCH = async (req: NextRequest) => {
         phoneNumber,
         location,
         logo: logoUrl,
+        printerIP: printerIP,
+        vat: vat,
       });
     }
 
     return NextResponse.json(
       { success: true, data: settings },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
       { success: false, message: "Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

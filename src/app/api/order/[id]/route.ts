@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 async function calculateTotals(
   orderedProducts: any,
   overallDiscount = 0,
-  isPercentage: boolean
+  isPercentage: boolean,
 ) {
   let grossTotal = 0;
   let total = 0;
@@ -35,7 +35,7 @@ async function calculateTotals(
 
 export const PATCH = async (
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) => {
   try {
     const authentication = await authenticate(req, [
@@ -59,7 +59,7 @@ export const PATCH = async (
           success: false,
           message: "No valid orderId",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (!data && !status && !discount && !completeProduct && !isPercentage) {
@@ -68,7 +68,7 @@ export const PATCH = async (
           success: false,
           message: "no data given to update",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -80,8 +80,20 @@ export const PATCH = async (
           success: false,
           message: "no order found for this order Id",
         },
-        { status: 404 }
+        { status: 404 },
       );
+    }
+    if (status === "completed") {
+      const lastOrder = await Order.findOne().sort({ invoice: -1 });
+
+      const lastInvoice = lastOrder
+        ? lastOrder.invoice
+          ? lastOrder.invoice
+          : 0
+        : 0;
+
+      const newInvoice = lastInvoice + 1;
+      order.invoice = newInvoice;
     }
     if (completeProduct !== undefined) {
       order.orderedProducts = order.orderedProducts.map((orderedProduct) => {
@@ -97,7 +109,7 @@ export const PATCH = async (
           success: true,
           message: "Product updated to completed",
         },
-        { status: 200 }
+        { status: 200 },
       );
     }
     if (data !== undefined) {
@@ -171,7 +183,7 @@ export const PATCH = async (
     const { grossTotal, total } = await calculateTotals(
       order.orderedProducts,
       discount,
-      isPercentage ? isPercentage : order.isPercentage
+      isPercentage ? isPercentage : order.isPercentage,
     );
     order.grossTotal = grossTotal;
     order.total = total;
@@ -188,7 +200,7 @@ export const PATCH = async (
         success: true,
         message: `${status ? `Order ${status}` : "Order updated"}`,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.log(error);
@@ -197,14 +209,14 @@ export const PATCH = async (
         success: false,
         message: "Server Side error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
 
 export const POST = async (
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) => {
   try {
     const authentication = await authenticate(req, [
@@ -224,7 +236,7 @@ export const POST = async (
           success: false,
           message: "Requirements to order are not fulfilled",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -238,7 +250,7 @@ export const POST = async (
           success: false,
           message: "Table Id is not valid",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
     const table: ITable | null = await Table.findById(tableId);
@@ -262,7 +274,7 @@ export const POST = async (
               ? "Takeaway order created"
               : "Order created",
         },
-        { status: 202 }
+        { status: 202 },
       );
     }
     const orderedProducts = currentOrders.map((current: any) => {
@@ -276,7 +288,7 @@ export const POST = async (
     const { grossTotal, total } = await calculateTotals(
       orderedProducts,
       discount,
-      true
+      true,
     );
     const order = await Order.create({
       orderType: orderType,
@@ -298,7 +310,7 @@ export const POST = async (
         success: true,
         message: "Order created",
       },
-      { status: 202 }
+      { status: 202 },
     );
   } catch (error) {
     console.log(error);
@@ -307,14 +319,14 @@ export const POST = async (
         success: false,
         message: "Server Side Error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
 
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) => {
   try {
     const authentication = await authenticate(req, [
@@ -332,7 +344,7 @@ export const GET = async (
           success: false,
           message: "Table is not provided",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
     const isValidTable = mongoose.isValidObjectId(tableId);
@@ -342,7 +354,7 @@ export const GET = async (
           success: false,
           message: "Not a valid table ID",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -365,7 +377,7 @@ export const GET = async (
         success: false,
         message: "Server Side Error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

@@ -87,7 +87,7 @@ export const GET = async (req: NextRequest) => {
     if (!status) {
       return NextResponse.json(
         { success: false, message: "Status is not provided" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -130,7 +130,7 @@ export const GET = async (req: NextRequest) => {
             0,
             0,
             0,
-            0
+            0,
           );
           endDate = new Date();
           endDate.setHours(23, 59, 59, 999);
@@ -144,7 +144,7 @@ export const GET = async (req: NextRequest) => {
             0,
             0,
             0,
-            0
+            0,
           );
           endDate = new Date();
           endDate.setHours(23, 59, 59, 999);
@@ -162,7 +162,7 @@ export const GET = async (req: NextRequest) => {
                 message:
                   "Custom date range requires both 'from' and 'to' dates",
               },
-              { status: 400 }
+              { status: 400 },
             );
           }
           break;
@@ -189,7 +189,7 @@ export const GET = async (req: NextRequest) => {
     console.log(" error:", error);
     return NextResponse.json(
       { success: false, message: "Server Side Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

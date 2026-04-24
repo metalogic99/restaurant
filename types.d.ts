@@ -100,7 +100,7 @@ interface LocalOrderItem {
     price: number;
   };
   quantity: number;
-  notes?: string;
+  notes: string;
 }
 
 interface OrderedProduct {

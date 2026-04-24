@@ -20,7 +20,6 @@ app.prepare().then(() => {
     socket.emit("connected");
     socket.on("updateOrder", (data) => {
       try {
-        console.log("line 27 :-tableId is", data);
         socket.broadcast.emit("updateOrder", data);
       } catch (err) {
         console.error("Error handling addOrder:", err);

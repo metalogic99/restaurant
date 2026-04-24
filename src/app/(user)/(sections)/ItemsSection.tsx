@@ -351,7 +351,7 @@ const ItemsSection = ({ tableId }: { tableId: string }) => {
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               {displayProducts.map((product) => (
                 <ProductCard
                   key={product._id}

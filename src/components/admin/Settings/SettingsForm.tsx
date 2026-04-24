@@ -9,7 +9,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Globe, Phone, MapPin, Store, Upload } from "lucide-react";
+import {
+  Globe,
+  Phone,
+  MapPin,
+  Store,
+  Upload,
+  Printer,
+  Paperclip,
+} from "lucide-react";
 import { useGetSettings, useUpdateSettings } from "@/hooks/settings.hooks";
 import { settingsSchema, SettingsFormValues } from "@/schemas/settings.schema";
 
@@ -68,6 +76,8 @@ export const SettingsTabs = () => {
     formData.append("displayName", data.displayName);
     formData.append("phoneNumber", data.phoneNumber);
     formData.append("location", data.location);
+    formData.append("vat", data.vat as string);
+    formData.append("printerIP", data.printerIP as string);
 
     if (logoFile) {
       formData.append("logo", logoFile);
@@ -153,6 +163,32 @@ export const SettingsTabs = () => {
                 <Label className="text-muted-foreground">Location</Label>
                 <p className="text-lg font-medium mt-1">
                   {settings.location || "Not set"}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-muted rounded-lg">
+                <Paperclip className="h-5 w-5 text-muted-foreground" />
+              </div>
+              <div>
+                <Label className="text-muted-foreground">Vat Number</Label>
+                <p className="text-lg font-medium mt-1">
+                  {settings.vat || "Not set"}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-muted rounded-lg">
+                <Printer className="h-5 w-5 text-muted-foreground" />
+              </div>
+              <div>
+                <Label className="text-muted-foreground">
+                  Printer IP Address
+                </Label>
+                <p className="text-lg font-medium mt-1">
+                  {settings.printerIP || "Not set"}
                 </p>
               </div>
             </div>
@@ -281,6 +317,43 @@ export const SettingsTabs = () => {
               {form.formState.errors.location && (
                 <p className="text-sm text-red-600">
                   {form.formState.errors.location.message}
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-muted rounded-lg mt-1">
+              <Paperclip className="h-5 w-5 text-muted-foreground" />
+            </div>
+            <div className="flex-1 space-y-2">
+              <Label htmlFor="location">Company VAT number</Label>
+              <Input
+                id="vat"
+                {...form.register("vat")}
+                placeholder="vat number"
+              />
+              {form.formState.errors.vat && (
+                <p className="text-sm text-red-600">
+                  {form.formState.errors.vat?.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-muted rounded-lg mt-1">
+              <Printer className="h-5 w-5 text-muted-foreground" />
+            </div>
+            <div className="flex-1 space-y-2">
+              <Label htmlFor="location">Printer IP Address</Label>
+              <Input
+                id="printerIP"
+                {...form.register("printerIP")}
+                placeholder="192.168.1.114"
+              />
+              {form.formState.errors.location && (
+                <p className="text-sm text-red-600">
+                  {form.formState.errors.printerIP?.message}
                 </p>
               )}
             </div>

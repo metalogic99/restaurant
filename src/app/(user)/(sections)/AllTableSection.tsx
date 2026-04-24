@@ -1,12 +1,12 @@
 "use client";
 import React, { useMemo, useState } from "react";
-import TableCard from "@/components/user/tableSection/TableCard";
 import { useGetAllTables } from "@/hooks/tables.hooks";
 import AdminError from "@/components/admin/AdminError";
 import Loading from "@/components/shared/Loading";
 import { useRouter } from "next/navigation";
 import useSocketEvents from "@/utils/socketHandler";
 import { ReservationPop } from "@/components/user/tableSection/ReservationPop";
+import TableCard from "@/components/user/tableSection/TableCard";
 
 const AllTableSection = () => {
   useSocketEvents();
@@ -49,7 +49,7 @@ const AllTableSection = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="w-full border border-gray-200 rounded-2xl grid md:grid-cols-4 grid-cols-1 p-6 bg-white gap-6 mb-10 shadow-lg">
+        <div className="w-full border border-gray-200 rounded-2xl grid md:grid-cols-4 grid-cols-2 p-6 bg-white gap-6 mb-10 shadow-lg">
           {[
             {
               label: "All Tables",
@@ -69,7 +69,7 @@ const AllTableSection = () => {
               onClick={() => setCurrentFilter(item.value)}
               className={`flex items-center justify-center ${
                 currentFilter === item.value ? "border-orange border-2" : ""
-              } h-24  shadow-xl rounded-xl cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out hover:border-2 hover:border-black `}
+              } h-16 md:h-24 shadow-xl rounded-xl cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out hover:border-2 hover:border-black `}
             >
               <span className="text-lg font-semibold text-gray-800">
                 {item.label}
@@ -78,7 +78,7 @@ const AllTableSection = () => {
           ))}
           <button
             onClick={takeAwayClick}
-            className={`flex items-center justify-center h-24 bg-yellow-500 hover:bg-yellow-600  shadow-xl rounded-xl cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out hover:border-2 hover:border-black `}
+            className={`flex items-center justify-center h-16 md:h-24 bg-yellow-500 hover:bg-yellow-600  shadow-xl rounded-xl cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out hover:border-2 hover:border-black `}
           >
             <span className="text-lg font-semibold text-white">Take away</span>
           </button>
@@ -87,7 +87,7 @@ const AllTableSection = () => {
         {!filteredTable ? (
           <div>Cant filter tables</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 my-6">
             {filteredTable.map((table, index) => (
               <TableCard key={index} table={table} />
             ))}

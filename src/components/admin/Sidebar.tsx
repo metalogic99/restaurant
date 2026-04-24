@@ -17,6 +17,7 @@ import {
   Gem,
   BanknoteArrowDown,
   CalendarCheck,
+  TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -34,6 +35,7 @@ const Sidebar = () => {
     { label: "Reservations", icon: CalendarCheck, href: "/admin/reservation" },
     { label: "User Management", icon: Users, href: "/admin/user-management" },
     { label: "Sales Report", icon: Album, href: "/admin/sales" },
+    { label: "Analytics", icon: TrendingUp, href: "/admin/analytics" },
     { label: "Today's Special", icon: Gem, href: "/admin/special" },
     {
       label: "Expense tracking",

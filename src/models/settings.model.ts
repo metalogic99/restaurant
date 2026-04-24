@@ -6,8 +6,10 @@ const settingSchema = new mongoose.Schema(
     logo: { type: String },
     phoneNumber: { type: String, required: true },
     location: { type: String, required: true },
+    printerIP: { type: String, required: false },
+    vat: { type: String, required: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Settings =
