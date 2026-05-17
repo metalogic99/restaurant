@@ -187,16 +187,16 @@ const BillModal = ({ onClose, order, table }: any) => {
             {/* Header */}
             <div className="text-center mb-6">
               <h2 className="text-xl font-bold text-black">
-                {data?.displayName || "Chiya O'Clock"}
+                {data?.displayName || "Mint Restro"}
               </h2>
               <p className="text-xs text-gray-500">
                 {data?.vat ? `VAT: ${data.vat}` : "Your Tax number"}
               </p>
               <p className="text-xs text-gray-500">
-                {data?.location || "Kumari Marg, Naxal, Kathmandu"}
+                {data?.location || "BabarMahal, Kathmandu"}
               </p>
               <p className="text-xs text-gray-500 font-medium">
-                +977 {data?.phoneNumber || "9814034734"}
+                +977 {data?.phoneNumber || "9814043734"}
               </p>
               <h3 className="mt-4 font-bold text-black text-sm uppercase">
                 Estimate Invoice
