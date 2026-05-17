@@ -21,7 +21,8 @@ const COMMANDS = {
 };
 
 const BillModal = ({ onClose, order, table }: any) => {
-  const [isPrinting, setIsPrinting] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false); // Controls the confirmation buttons view
   const router = useRouter();
   const { mutate: updateOrder } = useUpdateOrder(order.tableId);
   const { data } = useGetSettings();
@@ -29,9 +30,9 @@ const BillModal = ({ onClose, order, table }: any) => {
 
   const formatFullDate = () =>
     new Date().toLocaleDateString("en-US", {
-      month: "short", // Result: Apr, Mar, Feb
-      day: "2-digit", // Result: 09
-      year: "numeric", // Result: 2026
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
     });
 
   const formatFullTime = () =>
@@ -99,7 +100,6 @@ const BillModal = ({ onClose, order, table }: any) => {
     hex += tragedies(DOT_LINE);
 
     // Summary Rows
-    // Align Qty exactly under the QTY column (which ends at position 38)
     const label = "Item Total".padEnd(32);
     const qtyVal = totalQty.toString().padStart(6);
     const amtVal = `Rs ${order.grossTotal}`.padStart(10);
@@ -125,30 +125,44 @@ const BillModal = ({ onClose, order, table }: any) => {
     return hex;
   };
 
-  const handlePrint = async () => {
-    setIsPrinting(true);
-    try {
-      const response = await fetch("/api/print", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ escPosData: generateEscPosData() }),
-      });
-      const result = await response.json();
-      if (!result.success) throw new Error(result.error);
-
-      updateOrder(
-        { orderId: order._id, status: "completed" },
-        {
-          onSuccess: () => {
-            toast.success("Printed & Finalized");
-            router.push("/");
-          },
+  // Helper logic to complete and close out the order
+  const finalizeOrderInDb = (successMessage: string) => {
+    updateOrder(
+      { orderId: order._id, status: "completed" },
+      {
+        onSuccess: () => {
+          toast.success(successMessage);
+          router.push("/");
         },
-      );
-    } catch (e: any) {
-      toast.error(e.message);
-    } finally {
-      setIsPrinting(false);
+        onError: (err: any) => {
+          toast.error(err.message || "Failed to update order status");
+          setIsProcessing(false);
+        },
+      },
+    );
+  };
+
+  const handleAction = async (shouldPrint: boolean) => {
+    setIsProcessing(true);
+
+    if (shouldPrint) {
+      try {
+        const response = await fetch("/api/print", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ escPosData: generateEscPosData() }),
+        });
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error);
+
+        finalizeOrderInDb("Printed & Finalized Successfully!");
+      } catch (e: any) {
+        toast.error(`Printer Error: ${e.message}`);
+        setIsProcessing(false);
+      }
+    } else {
+      // Direct completion without physical layout printing
+      finalizeOrderInDb("Order Finalized (Without Printing)");
     }
   };
 
@@ -159,7 +173,11 @@ const BillModal = ({ onClose, order, table }: any) => {
           <h3 className="font-semibold text-gray-800 tracking-tight">
             Invoice Preview
           </h3>
-          <button onClick={onClose} className="text-gray-400 hover:text-black">
+          <button
+            onClick={onClose}
+            disabled={isProcessing}
+            className="text-gray-400 hover:text-black disabled:opacity-50"
+          >
             ✕
           </button>
         </div>
@@ -256,14 +274,42 @@ const BillModal = ({ onClose, order, table }: any) => {
           </div>
         </div>
 
+        {/* Dynamic Action Footer */}
         <div className="p-4 bg-white border-t">
-          <button
-            onClick={handlePrint}
-            disabled={isPrinting}
-            className="w-full bg-blue-600 text-white py-3.5 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg active:scale-95"
-          >
-            {isPrinting ? "Processing Printer..." : "Confirm & Print Bill"}
-          </button>
+          {!showConfirmation ? (
+            <button
+              onClick={() => setShowConfirmation(true)}
+              className="w-full bg-blue-600 text-white py-3.5 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg active:scale-95"
+            >
+              Confirm Actions
+            </button>
+          ) : (
+            <div className="space-y-2 animate-in fade-in duration-200">
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleAction(true)}
+                  disabled={isProcessing}
+                  className="flex-1 bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all text-sm disabled:opacity-50"
+                >
+                  {isProcessing ? "Printing..." : "Print & Complete"}
+                </button>
+                <button
+                  onClick={() => handleAction(false)}
+                  disabled={isProcessing}
+                  className="flex-1 bg-amber-600 text-white py-3 rounded-xl font-bold hover:bg-amber-700 transition-all text-sm disabled:opacity-50"
+                >
+                  {isProcessing ? "Processing..." : "Skip Print & Complete"}
+                </button>
+              </div>
+              <button
+                onClick={() => setShowConfirmation(false)}
+                disabled={isProcessing}
+                className="w-full text-xs text-gray-500 hover:text-gray-800 py-1 transition-colors"
+              >
+                Go Back
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
